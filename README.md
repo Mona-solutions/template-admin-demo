@@ -1,2 +1,2 @@
 # template-admin
-Template for adminstrator
+Template for administrator
