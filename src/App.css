@@ -1,0 +1,88 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  width: 22rem;
+  height: 22rem;
+  margin-bottom: -3rem;
+}
+
+.landingPage {
+  background-color: white;
+  color: rgb(56, 56, 56);
+  padding: 3rem;
+  border-radius: 2rem;
+}
+
+.landingPage h1 {
+  font-family: montserrat;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.landingPage p {
+  font-family: montserrat;
+  margin-bottom: 2rem;
+  font-size: x-large;
+}
+
+.landingPage button {
+  font-size: large;
+  font-size: large;
+  justify-content: center;
+}
+
+.landingPage button:hover {
+  background-color: rgb(59, 59, 59);
+  border-color: black;
+}
+
+.form {
+  background-color: white;
+  padding: 2rem;
+  text-align: left;
+  border-radius: 1rem;
+  align-items: center;
+}
+
+.formDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-items: center;
+  font-weight: 600;
+}
+
+.formDivButton {
+  display: flex;
+  justify-content: right;
+  margin-top: 1rem;
+}
+
+.formButton {
+  font-size: large;
+}
+
+.formButton:hover {
+  background-color: rgb(59, 59, 59);
+}
+
+.form label {
+  color: rgb(67, 67, 67);
+  font-size: large;
+  width: 35rem;
+}
+
+.form input {
+  width: full;
+  margin-bottom: 1rem;
+  background-color: rgb(224, 224, 224);
+  height: 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  color: black;
+}
