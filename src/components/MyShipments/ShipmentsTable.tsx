@@ -1,58 +1,74 @@
+import ShipmentDetailsDialog from "../MyShipments/ShipmentDetailsDialog";
 import type { Shipment } from "../../types/Shipment";
-
-interface ShipmentsTableProps {
-  shipments: Shipment[];
-  onDelete: (id: string) => void;
-}
+import { Button } from "@/components/ui/button";
 
 export default function ShipmentsTable({
   shipments,
+  onEdit,
   onDelete,
-}: ShipmentsTableProps) {
+}: {
+  shipments: Shipment[];
+  onEdit: (shipment: Shipment) => void;
+  onDelete: (id: string) => void;
+}) {
   return (
-    <div className="bg-white shadow rounded overflow-hidden">
-      <table className="w-full text-left">
-        <thead className="bg-gray-100">
+    <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm bg-white">
+      <table className="w-full border-collapse text-sm text-gray-800">
+        <thead className="bg-gray-100 text-[rgb(25,52,85)] ">
           <tr>
-            <th className="p-3">Order #</th>
-            <th className="p-3">Tracking ID</th>
-            <th className="p-3">Sender</th>
-            <th className="p-3">Recipient</th>
-            <th className="p-3">Status</th>
-            <th className="p-3">Type</th>
-            <th className="p-3">Service</th>
-            <th className="p-3">Date</th>
-            <th className="p-3">Actions</th>
+            <th className="p-3 font-semibold">Order #</th>
+            <th className="p-3 font-semibold">Tracking ID</th>
+            <th className="p-3 font-semibold">Sender</th>
+            <th className="p-3 font-semibold">Recipient</th>
+            <th className="p-3 font-semibold">Status</th>
+            <th className="p-3 font-semibold">Actions</th>
           </tr>
         </thead>
+
         <tbody>
-          {shipments.map((s) => (
-            <tr key={s.id} className="border-t hover:bg-gray-50">
-              <td className="p-3">{s.orderNumber}</td>
-              <td className="p-3">{s.trackingId}</td>
-              <td className="p-3">{s.sender}</td>
-              <td className="p-3">{s.recipient}</td>
-              <td className="p-3">{s.status}</td>
-              <td className="p-3">{s.type}</td>
-              <td className="p-3">{s.service}</td>
-              <td className="p-3">{s.date}</td>
-              <td className="p-3">
-                <button
-                  onClick={() => onDelete(s.id)}
-                  className="text-red-600 hover:text-red-800 font-semibold transition"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
           {shipments.length === 0 && (
             <tr>
-              <td colSpan={7} className="p-6 text-center text-gray-500">
-                No shipments available.
+              <td colSpan={6} className="text-center py-6 text-gray-500">
+                No shipments found.
               </td>
             </tr>
           )}
+
+          {shipments.map((shipment) => (
+            <tr
+              key={shipment.id}
+              className="border-t hover:bg-gray-50 transition"
+            >
+              <td
+                className="p-3 cursor-pointer text-center"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {shipment.orderNumber}
+              </td>
+              <td className="p-3 text-center">{shipment.trackingId}</td>
+              <td className="p-3 text-center">{shipment.sender}</td>
+              <td className="p-3 text-center">{shipment.recipient}</td>
+              <td className="p-3 text-center">{shipment.status}</td>
+
+              <td className="p-3 text-center">
+                <div className="flex justify-center items-center gap-3">
+                  <ShipmentDetailsDialog shipment={shipment} onUpdate={onEdit}>
+                    <Button variant="outline" size="sm">
+                      View
+                    </Button>
+                  </ShipmentDetailsDialog>
+
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => onDelete(shipment.id)}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

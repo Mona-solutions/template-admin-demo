@@ -15,7 +15,7 @@ import {
   SHIPMENT_PICKUP_LOCATION,
 } from "../../types/Shipment";
 
-function generateTrackingId(): string {
+export function generateTrackingId(): string {
   const prefix = "DRP"; // puede ser tu marca (Droppit)
   const randomNumber = Math.floor(10000000 + Math.random() * 90000000); // 8 dígitos
   const countryCode = "AR"; // o el país de origen, si querés

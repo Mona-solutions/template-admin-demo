@@ -6,6 +6,10 @@ export const SHIPMENT_STATUSES = [
   "Failed",
 ] as const;
 
+export const SHIPMENT_STATUSES_FOR_FORM = SHIPMENT_STATUSES.filter(
+  (s) => s !== "All"
+);
+
 export type ShipmentStatus = (typeof SHIPMENT_STATUSES)[number];
 
 export const SHIPMENT_TYPE = [
@@ -38,6 +42,19 @@ export const SHIPMENT_DELIVERY_LOCATION = [
 ] as const;
 export type ShipmentDeliveryLocation =
   (typeof SHIPMENT_DELIVERY_LOCATION)[number];
+
+export type ShipmentFormData = {
+  orderNumber: string;
+  trackingId: string;
+  sender: string;
+  recipient: string;
+  status: ShipmentStatus;
+  type: ShipmentType;
+  service: ShipmentService;
+  pickup: ShipmentPickLocation;
+  delivery: ShipmentDeliveryLocation;
+  date: Date | null;
+};
 
 export interface Shipment {
   id: string;

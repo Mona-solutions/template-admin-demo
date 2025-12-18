@@ -1,10 +1,8 @@
 export type Page =
-  | "LandingPage"
   | "Home"
-  | "Register Shipment"
   | "My Shipments"
-  | "Clients & Consignees"
+  | "ClientsAndConsignees"
   | "Payments"
-  | "Analytics & Statistics"
+  | "AnalyticsAndStatistics"
   | "Support"
   | "Settings";
