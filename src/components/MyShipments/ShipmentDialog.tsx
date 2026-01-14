@@ -20,7 +20,6 @@ import { generateTrackingId } from "../RegisterShippment/RegisterShippment";
 export default function ShipmentDialog() {
   const { create } = useShipments();
 
-  // ✅ ESTO VA AQUÍ, ADENTRO DEL COMPONENTE
   const { addClient } = useClients();
   const { addConsignee } = useConsignees();
 
@@ -52,10 +51,6 @@ export default function ShipmentDialog() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // ===============================
-    //   GUARDA AUTOMÁTICAMENTE CLIENT Y CONSIGNEE
-    // ===============================
-
     if (form.sender && form.senderEmail) {
       addClient({
         id: crypto.randomUUID(),
@@ -78,7 +73,6 @@ export default function ShipmentDialog() {
       });
     }
 
-    // CREA EL ENVÍO
     create({
       ...form,
       date: new Date(form.date).toISOString(),
@@ -107,7 +101,10 @@ export default function ShipmentDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-md bg-white text-[rgb(25,52,85)] font-semibold shadow hover:bg-gray-100">
+        <button
+          type="button"
+          className=" flex items-center gap-2 px-4 py-2 rounded-md font-semibold shadow bg-white text-[rgb(25,52,85)] hover:bg-gray-100 dark:text-[#E6EDF5] dark:bg-[rgb(25,52,85)] dark:hover:bg-[rgb(56, 94, 144)]"
+        >
           <span className="text-lg">＋</span>
           New Shipment
         </button>
@@ -115,7 +112,7 @@ export default function ShipmentDialog() {
 
       <DialogContent className="max-w-3xl">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold text-[rgb(25,52,85)]">
+          <DialogTitle className="text-2xl font-semibold text-[rgb(25,52,85)] dark:text-[#E6EDF5]">
             Create Shipment
           </DialogTitle>
           <DialogDescription>

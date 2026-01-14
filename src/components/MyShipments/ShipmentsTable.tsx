@@ -12,23 +12,23 @@ export default function ShipmentsTable({
   onDelete: (id: string) => void;
 }) {
   return (
-    <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm bg-white">
-      <table className="w-full border-collapse text-sm text-gray-800">
-        <thead className="bg-gray-100 text-[rgb(25,52,85)] ">
-          <tr>
-            <th className="p-3 font-semibold">Order #</th>
-            <th className="p-3 font-semibold">Tracking ID</th>
-            <th className="p-3 font-semibold">Sender</th>
-            <th className="p-3 font-semibold">Recipient</th>
-            <th className="p-3 font-semibold">Status</th>
-            <th className="p-3 font-semibold">Actions</th>
+    <div className="overflow-x-auto rounded-xl border border-border bg-card text-card-foreground shadow-sm">
+      <table className="w-full border-collapse text-sm">
+        <thead className="bg-muted/50 text-foreground">
+          <tr className="border-b border-border">
+            <th className="p-3 font-semibold text-center">Order #</th>
+            <th className="p-3 font-semibold text-center">Tracking ID</th>
+            <th className="p-3 font-semibold text-center">Sender</th>
+            <th className="p-3 font-semibold text-center">Recipient</th>
+            <th className="p-3 font-semibold text-center">Status</th>
+            <th className="p-3 font-semibold text-center">Actions</th>
           </tr>
         </thead>
 
-        <tbody>
+        <tbody className="divide-y divide-border">
           {shipments.length === 0 && (
             <tr>
-              <td colSpan={6} className="text-center py-6 text-gray-500">
+              <td colSpan={6} className="text-center py-10 text-muted-foreground">
                 No shipments found.
               </td>
             </tr>
@@ -37,7 +37,7 @@ export default function ShipmentsTable({
           {shipments.map((shipment) => (
             <tr
               key={shipment.id}
-              className="border-t hover:bg-gray-50 transition"
+              className="transition-colors hover:bg-muted/40"
             >
               <td
                 className="p-3 cursor-pointer text-center"
@@ -45,6 +45,7 @@ export default function ShipmentsTable({
               >
                 {shipment.orderNumber}
               </td>
+
               <td className="p-3 text-center">{shipment.trackingId}</td>
               <td className="p-3 text-center">{shipment.sender}</td>
               <td className="p-3 text-center">{shipment.recipient}</td>

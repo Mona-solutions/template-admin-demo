@@ -36,7 +36,7 @@ export default function FAQModal({
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-[rgb(25,52,85)]">
+          <DialogTitle className="text-[rgb(25,52,85)] dark:text-[#E6EDF5]">
             Support FAQs
           </DialogTitle>
         </DialogHeader>
@@ -46,10 +46,10 @@ export default function FAQModal({
         <div className="space-y-4 text-xs text-gray-700">
           {faqs.map((faq, index) => (
             <div key={index} className="border-b pb-2">
-              <p className="font-semibold text-[rgb(25,52,85)]">
+              <p className="font-semibold text-[rgb(25,52,85)] dark:text-[#E6EDF5]">
                 {faq.question}
               </p>
-              <p className="opacity-80">{faq.answer}</p>
+              <p className="opacity-80 text-muted-foreground">{faq.answer}</p>
             </div>
           ))}
         </div>

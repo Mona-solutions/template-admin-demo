@@ -1,11 +1,15 @@
-interface UserTabProps {
-  name: string;
-  email: string;
-}
+import { useAuth } from "@/auth/AuthContext";
 
-export default function UserTab({ name, email }: UserTabProps) {
+export default function UserTab() {
+  const { auth } = useAuth();
+
+  if (!auth.isAuthenticated) return null;
+
+  const name = auth.user.username;
+  const email = auth.user.email;
+
   return (
-    <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 cursor-pointer">
+    <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-muted/60 cursor-pointer">
       <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-bold">
         U
       </div>

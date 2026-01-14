@@ -1,12 +1,11 @@
-import type { User } from "../../types/UserData";
-import { useState, useEffect } from "react";
-import { useUser } from "@/context/UserContext";
+import { useState } from "react";
 import { useRouter } from "@tanstack/react-router";
 import { appRootRoute } from "@/router/app-root";
+import { useAuth } from "@/auth/AuthContext";
 
 export default function LandingPage() {
-  const { setUser } = useUser();
   const router = useRouter();
+  const { login } = useAuth();
 
   const inputClassName =
     "border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[rgb(25,52,85)]";
@@ -15,30 +14,20 @@ export default function LandingPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    const savedUser = localStorage.getItem("userSettings");
-    if (savedUser) {
-      const parsed = JSON.parse(savedUser);
-      setName(parsed.name ?? "");
-      setEmail(parsed.email ?? "");
-    }
-  }, []);
-
   const handleStart = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newUser: User = {
-      id: crypto.randomUUID(),
-      name: name.trim(),
-      email: email.trim(),
-      username: "",
-      avatar: "",
-      password: password.trim(),
-    };
+    const username = name.trim();
+    const userEmail = email.trim();
+
+    if (!username) return;
 
     // Persistencia + contexto
-    localStorage.setItem("userSettings", JSON.stringify(newUser));
-    setUser(newUser);
+    login({
+      name: name.trim(),
+      email: userEmail,
+      username: "",
+    });
 
     // 👉 Navegación TIPADA
     router.navigate({
@@ -68,7 +57,7 @@ export default function LandingPage() {
         >
           <input
             type="text"
-            placeholder="Username"
+            placeholder="Name"
             className={inputClassName}
             value={name}
             onChange={(e) => setName(e.target.value)}

@@ -26,7 +26,7 @@ export default function ClientsAndConsignees() {
           className={`px-5 py-2 rounded-lg font-medium transition ${
             activeTab === "clients"
               ? "bg-[#193455] text-white shadow"
-              : "bg-gray-200 text-gray-700"
+              : "bg-gray-200 text-gray-700 dark:text-[rgb(25,52,85)] dark:hover:bg-slate-400"
           }`}
           onClick={() => setActiveTab("clients")}
         >
@@ -37,7 +37,7 @@ export default function ClientsAndConsignees() {
           className={`px-5 py-2 rounded-lg font-medium transition ${
             activeTab === "consignees"
               ? "bg-[#193455] text-white shadow"
-              : "bg-gray-200 text-gray-700"
+              : "bg-gray-200 text-gray-700 dark:text-[rgb(25,52,85)] dark:hover:bg-slate-400"
           }`}
           onClick={() => setActiveTab("consignees")}
         >

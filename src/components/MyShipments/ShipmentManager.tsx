@@ -54,10 +54,10 @@ export default function ShipmentsManager() {
 
   return (
     <div className="space-y-10">
-      <div className="bg-[rgb(25,52,85)] text-white p-6 rounded-lg shadow-md flex justify-between items-center">
+      <div className="bg-[rgb(25,52,85)] text-white p-6 rounded-lg shadow-md flex justify-between items-center dark:bg-white text-[rgb(25,52,85)] dark:text-[rgb(25,52,85)]">
         <div>
           <h1 className="text-2xl font-bold">Create & Manage Shipments</h1>
-          <p className="text-gray-200">
+          <p className="text-gray-200 dark:text-black">
             Register and track all your shipments easily.
           </p>
         </div>
@@ -105,7 +105,7 @@ function ShipmentsList({
 }) {
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-4 text-[rgb(25,52,85)]">
+      <h2 className="text-xl font-semibold mb-4 text-[rgb(25,52,85)] dark:text-[#E6EDF5]">
         Shipments List
       </h2>
 
@@ -161,14 +161,29 @@ function Dropdown({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className={`flex justify-between items-center ${width} bg-white text-gray-700 border`}
+          className={[
+            "flex justify-between items-center",
+            width,
+            "bg-background text-foreground border-border",
+            "hover:bg-muted/60 dark:hover:bg-muted/30",
+            "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+          ].join(" ")}
         >
-          {label}: {value}
+          <span className="truncate">
+            {label}: {value}
+          </span>
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className={`bg-white border shadow-lg ${width}`}>
-        <DropdownMenuLabel className="text-sm text-gray-500">
+      <DropdownMenuContent
+        align="start"
+        className={[
+          width,
+          "bg-popover text-popover-foreground border-border",
+          "shadow-md",
+        ].join(" ")}
+      >
+        <DropdownMenuLabel className="text-xs text-muted-foreground">
           {label}
         </DropdownMenuLabel>
 
@@ -176,7 +191,12 @@ function Dropdown({
           <DropdownMenuItem
             key={option}
             onClick={() => onChange(option)}
-            className="cursor-pointer hover:bg-[rgb(25,52,85)] hover:text-white"
+            className={[
+              "cursor-pointer",
+              "focus:bg-muted focus:text-foreground",
+              "hover:bg-muted/70 dark:hover:bg-muted/40",
+              "rounded-sm",
+            ].join(" ")}
           >
             {option}
           </DropdownMenuItem>
@@ -185,3 +205,4 @@ function Dropdown({
     </DropdownMenu>
   );
 }
+

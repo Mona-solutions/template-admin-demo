@@ -1,5 +1,6 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import App from "@/App";
+import { AuthProvider } from "@/auth/AuthContext";
 
 export const rootRoute = createRootRoute({
   component: RootLayout,
@@ -7,8 +8,10 @@ export const rootRoute = createRootRoute({
 
 function RootLayout() {
   return (
-    <App>
-      <Outlet />
-    </App>
+    <AuthProvider>
+      <App>
+        <Outlet />
+      </App>
+    </AuthProvider>
   );
 }

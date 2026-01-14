@@ -5,19 +5,11 @@ export default function RecentActivity({
 }: {
   shipments: Shipment[];
 }) {
-  if (!shipments || shipments.length === 0) {
-    return (
-      <div className="px-6 py-10 text-center text-gray-500">
-        No recent activity available.
-      </div>
-    );
-  }
-
   const recent = shipments.slice(-5).reverse();
 
   return (
-    <div className="px-6 py-4 shadow-md rounded-lg">
-      <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
+    <div className="px-6 py-4 rounded-lg">
+      <h2 className="text-lg text-center font-semibold text-gray-700 dark:text-[#E6EDF5]">Recent Activity</h2>
 
       <ul className="space-y-3">
         {recent.map((s) => (

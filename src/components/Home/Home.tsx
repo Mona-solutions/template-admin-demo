@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useUser } from "@/context/UserContext";
 import { useShipments } from "@/context/ShipmentsContext";
 
 import GreetingUser from "./GreetingUser";
@@ -16,7 +15,6 @@ import {
 } from "@/components/ui/select";
 
 export default function Home() {
-  const { user } = useUser();
   const { shipments } = useShipments();
 
   const [currency, setCurrency] = useState("USD");
@@ -24,7 +22,7 @@ export default function Home() {
 
   return (
     <div>
-      <header className="flex justify-between items-center px-6 py-4 border-b-2 w-full">
+      <header className="flex justify-between items-center rounded-lg px-6 py-4 border-b-2 w-full dark:border border-border">
         <div className="flex gap-2">
           <Select value={country} onValueChange={setCountry}>
             <SelectTrigger className="w-[150px]">
@@ -50,14 +48,20 @@ export default function Home() {
         </div>
 
         <div className="flex items-center gap-4">
-          <UserTab name={user.name} email={user.email} />
+          <UserTab />
         </div>
       </header>
 
       <main className="py-4">
-        <GreetingUser name={user.name} />
+        <div>
+          <GreetingUser/>
+        </div>
+        <div className="mt-10 dark:border rounded-lg">
         <ShipmentData shipments={shipments} />
+        </div>
+        <div className="mt-10 dark:border rounded-lg">
         <RecentActivity shipments={shipments} />
+        </div>
       </main>
     </div>
   );

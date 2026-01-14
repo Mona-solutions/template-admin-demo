@@ -55,7 +55,7 @@ export default function ShipmentForm({
             type="text"
             value={form.orderNumber}
             onChange={(e) => onChange("orderNumber", e.target.value)}
-            className="w-full px-3 py-2 rounded-md border border-gray-300 focus:border-[rgb(25,52,85)] focus:ring-0 outline-none"
+            className="w-full px-3 py-2 rounded-md border border-gray-300 focus:border-[rgb(25,52,85)] focus:ring-0 outline-none dark:bg-black dark:text-slate-100 dark:border-slate-700 dark:placeholder:text-slate-200"
             placeholder="Order Number"
           />
         </div>
@@ -67,7 +67,7 @@ export default function ShipmentForm({
             type="text"
             value={form.trackingId}
             readOnly
-            className="w-full px-3 py-2 rounded-md border border-gray-200 bg-gray-100 text-gray-600"
+            className="w-full px-3 py-2 rounded-md border border-gray-200 bg-gray-100 text-gray-600 dark:bg-black dark:text-slate-100 dark:border-slate-700 dark:placeholder:text-slate-200" 
           />
         </div>
 
@@ -175,7 +175,7 @@ export default function ShipmentForm({
             type="text"
             value={form.sender}
             onChange={(e) => onChange("sender", e.target.value)}
-            className="w-full px-3 py-2 rounded-md border border-gray-300 focus:border-[rgb(25,52,85)] focus:ring-0 outline-none"
+            className="w-full px-3 py-2 rounded-md border border-gray-300 focus:border-[rgb(25,52,85)] focus:ring-0 outline-none dark:bg-black dark:text-slate-100 dark:border-slate-700 dark:placeholder:text-slate-200"
           />
         </div>
 
@@ -186,7 +186,7 @@ export default function ShipmentForm({
             type="email"
             value={form.senderEmail}
             onChange={(e) => onChange("senderEmail", e.target.value)}
-            className="w-full px-3 py-2 rounded-md border border-gray-300 focus:border-[rgb(25,52,85)] focus:ring-0 outline-none"
+            className="w-full px-3 py-2 rounded-md border border-gray-300 focus:border-[rgb(25,52,85)] focus:ring-0 outline-none dark:bg-black dark:text-slate-100 dark:border-slate-700 dark:placeholder:text-slate-200"
             placeholder="example@domain.com"
           />
         </div>
@@ -198,7 +198,7 @@ export default function ShipmentForm({
             type="text"
             value={form.recipient}
             onChange={(e) => onChange("recipient", e.target.value)}
-            className="w-full px-3 py-2 rounded-md border border-gray-300 focus:border-[rgb(25,52,85)] focus:ring-0 outline-none"
+            className="w-full px-3 py-2 rounded-md border border-gray-300 focus:border-[rgb(25,52,85)] focus:ring-0 outline-none dark:bg-black dark:text-slate-100 dark:border-slate-700 dark:placeholder:text-slate-200"
           />
         </div>
 
@@ -209,7 +209,7 @@ export default function ShipmentForm({
             type="email"
             value={form.recipientEmail}
             onChange={(e) => onChange("recipientEmail", e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:border-[rgb(25,52,85)] focus:ring-0 outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:border-[rgb(25,52,85)] focus:ring-0 outline-none dark:bg-black dark:text-slate-100 dark:border-slate-700 dark:placeholder:text-slate-200"
             placeholder="example@domain.com"
           />
         </div>
@@ -245,8 +245,7 @@ export default function ShipmentForm({
           <button
             type="button"
             onClick={onCancel}
-            className="text-gray-500 hover:text-gray-700 text-sm"
-          >
+            className="px-4 py-2 rounded-md text-sm text-gray-500 dark:text-[#E6EDF5] hover:text-gray-700 dark:hover:text-white hover:bg-muted/60 dark:hover:bg-muted/30 transition">
             Cancel
           </button>
         )}
@@ -254,7 +253,7 @@ export default function ShipmentForm({
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="bg-[rgb(25,52,85)] hover:bg-[rgb(18,40,68)]"
+          className="bg-[rgb(25,52,85)] hover:bg-[rgb(18,40,68)] dark:text-[#E6EDF5]"
         >
           {isSubmitting ? "Saving..." : "Save"}
         </Button>

@@ -19,6 +19,9 @@ export default function Support() {
       {/* Header */}
       <div className="bg-[rgb(25,52,85)] text-white p-6 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold">Support</h1>
+        <p className="text-gray-200">
+           Get help, report issues, or find answers to common questions.
+          </p>
       </div>
 
       {/* Actions */}

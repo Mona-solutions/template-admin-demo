@@ -5,6 +5,7 @@ import PaymentsData from "./PaymentsData";
 import FilterPaymentsData from "./FilterPaymentsData";
 import PaymentDialog from "./PaymentDialog";
 import PaymentDetailsDialog from "./PaymentsDetailDialog";
+import { Button } from "../ui/button";
 
 import {
   type Payment,
@@ -124,7 +125,7 @@ export default function Payments() {
 
         <button
           onClick={() => setDialogOpen(true)}
-          className="flex items-center gap-2 bg-white text-[rgb(25,52,85)] px-4 py-2 rounded-md font-medium shadow-sm hover:bg-gray-100 transition"
+          className="flex items-center gap-2 bg-white text-[rgb(25,52,85)] px-4 py-2 rounded-md font-medium shadow-sm hover:bg-gray-100 transition dark:text-[rgb(25,52,85)] dark:hover:bg-slate-400"
         >
           <span className="text-lg font-bold">+</span>
           New Payment
@@ -156,65 +157,66 @@ export default function Payments() {
         setDateRange={setDateRange}
       />
 
-      <div className="bg-white shadow rounded overflow-hidden">
-        <table className="w-full text-left">
-          <thead className="bg-gray-100 text-[rgb(25,52,85)]">
-            <tr>
-              <th className="p-3 font-semibold text-sm">Invoice #</th>
-              <th className="p-3 font-semibold text-sm">Client</th>
-              <th className="p-3 font-semibold text-sm">Amount</th>
-              <th className="p-3 font-semibold text-sm">Method</th>
-              <th className="p-3 font-semibold text-sm">Status</th>
-              <th className="p-3 font-semibold text-sm">Issued</th>
-              <th className="p-3 font-semibold text-sm">Due</th>
-              <th className="p-3 font-semibold text-sm text-right">Actions</th>
-            </tr>
-          </thead>
+      <div className="rounded-xl border border-border bg-card text-card-foreground shadow-sm overflow-hidden">
+      <table className="w-full text-left text-sm">
+        <thead className="bg-muted/50 text-foreground">
+          <tr className="border-b border-border">
+            <th className="p-3 font-semibold">Invoice #</th>
+            <th className="p-3 font-semibold">Client</th>
+            <th className="p-3 font-semibold">Amount</th>
+            <th className="p-3 font-semibold">Method</th>
+            <th className="p-3 font-semibold">Status</th>
+            <th className="p-3 font-semibold">Issued</th>
+            <th className="p-3 font-semibold">Due</th>
+            <th className="p-3 font-semibold text-right">Actions</th>
+          </tr>
+        </thead>
 
-          <tbody>
-            {filtered.map((p) => (
-              <PaymentDetailsDialog
-                key={p.invoice}
-                payment={p}
-                onUpdate={handleUpdatePayment}
-                onDelete={handleDeletePayment}
+    <tbody className="divide-y divide-border">
+      {filtered.map((p) => (
+        <PaymentDetailsDialog
+          key={p.invoice}
+          payment={p}
+          onUpdate={handleUpdatePayment}
+          onDelete={handleDeletePayment}
+        >
+          <tr className="cursor-pointer transition-colors hover:bg-muted/40">
+            <td className="p-3 font-medium">{p.invoice}</td>
+            <td className="p-3">{p.client}</td>
+            <td className="p-3">{currency(p.amount)}</td>
+            <td className="p-3">{p.method}</td>
+            <td className="p-3">
+              <StatusBadge status={p.status} />
+            </td>
+            <td className="p-3">{p.issuedAt}</td>
+            <td className="p-3">{p.dueAt}</td>
+
+            <td className="p-3 text-right">
+              <Button
+                size="sm"
+                variant="destructive"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeletePayment(p.invoice);
+                }}
               >
-                <tr className="border-t hover:bg-gray-50 cursor-pointer transition">
-                  <td className="p-3 font-medium">{p.invoice}</td>
-                  <td className="p-3">{p.client}</td>
-                  <td className="p-3">{currency(p.amount)}</td>
-                  <td className="p-3">{p.method}</td>
-                  <td className="p-3">
-                    <StatusBadge status={p.status} />
-                  </td>
-                  <td className="p-3">{p.issuedAt}</td>
-                  <td className="p-3">{p.dueAt}</td>
+                Delete
+              </Button>
+            </td>
+          </tr>
+        </PaymentDetailsDialog>
+      ))}
 
-                  <td className="p-3 text-right">
-                    <button
-                      className="px-4 py-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded-md"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeletePayment(p.invoice);
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              </PaymentDetailsDialog>
-            ))}
-
-            {filtered.length === 0 && (
-              <tr>
-                <td className="p-6 text-center text-gray-500" colSpan={8}>
-                  No payments match your filters.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      {filtered.length === 0 && (
+        <tr>
+          <td className="p-10 text-center text-muted-foreground" colSpan={8}>
+            No payments match your filters.
+          </td>
+        </tr>
+      )}
+    </tbody>
+  </table>
+</div>
     </div>
   );
 }

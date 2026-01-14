@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useConsignees } from "@/context/ConsigneesContext";
 import { Input } from "@/components/ui/input";
 import type { Consignee } from "@/context/ConsigneesContext";
+import { Button } from "../ui/button";
 
 import {
   Table,
@@ -15,7 +16,6 @@ import {
 export default function ConsigneeDirectory() {
   const { consignees, updateConsignee, deleteConsignee } = useConsignees();
 
-  // 🔥 MISMO PROBLEMA: había que tiparlo
   const [editing, setEditing] = useState<Consignee | null>(null);
 
   const handleSave = () => {
@@ -26,141 +26,153 @@ export default function ConsigneeDirectory() {
   };
 
   return (
-    <section className="mb-10">
-      <h2 className="text-2xl font-semibold text-[rgb(25,52,85)] mb-4">
-        Consignees Directory
-      </h2>
+  <section className="mb-10 space-y-4">
+    <h2 className="text-2xl font-semibold text-[rgb(25,52,85)] dark:text-[#E6EDF5]">
+      Consignees Directory
+    </h2>
 
-      <div className="bg-white shadow rounded overflow-x-auto">
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-[rgb(25,52,85)] text-white">
-              <TableHead className="text-white w-[18%]">Name</TableHead>
-              <TableHead className="text-white w-[18%]">Address</TableHead>
-              <TableHead className="text-white w-[14%]">Postal Code</TableHead>
-              <TableHead className="text-white w-[14%]">Country</TableHead>
-              <TableHead className="text-white w-[18%]">Email</TableHead>
-              <TableHead className="text-white text-center w-[18%]">
-                Actions
-              </TableHead>
+    <div className="rounded-xl border border-border bg-card text-card-foreground shadow-sm overflow-x-auto">
+      <Table>
+        <TableHeader>
+          <TableRow className="bg-[rgb(25,52,85)] text-white">
+            <TableHead className="text-white w-[18%]">Name</TableHead>
+            <TableHead className="text-white w-[18%]">Address</TableHead>
+            <TableHead className="text-white w-[14%]">Postal Code</TableHead>
+            <TableHead className="text-white w-[14%]">Country</TableHead>
+            <TableHead className="text-white w-[18%]">Email</TableHead>
+            <TableHead className="text-white text-center w-[18%]">
+              Actions
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+
+        <TableBody className="[&_tr]:border-border">
+          {consignees.length === 0 && (
+            <TableRow>
+              <TableCell
+                colSpan={6}
+                className="py-10 text-center text-muted-foreground"
+              >
+                No consignees registered yet.
+              </TableCell>
             </TableRow>
-          </TableHeader>
+          )}
 
-          <TableBody>
-            {consignees.length === 0 && (
-              <TableRow>
-                <TableCell
-                  colSpan={6}
-                  className="py-6 text-center text-gray-500"
-                >
-                  No consignees registered yet.
-                </TableCell>
-              </TableRow>
-            )}
+          {consignees.map((c) => (
+            <TableRow
+              key={c.id}
+              className="transition-colors hover:bg-muted/40"
+            >
+              <TableCell>
+                {editing?.id === c.id ? (
+                  <Input
+                    value={editing.name}
+                    onChange={(e) =>
+                      setEditing({ ...editing, name: e.target.value })
+                    }
+                    className="bg-background text-foreground border-border"
+                  />
+                ) : (
+                  c.name
+                )}
+              </TableCell>
 
-            {consignees.map((c) => (
-              <TableRow key={c.id} className="border-t">
-                <TableCell>
-                  {editing?.id === c.id ? (
-                    <Input
-                      value={editing.name}
-                      onChange={(e) =>
-                        setEditing({ ...editing, name: e.target.value })
-                      }
-                    />
-                  ) : (
-                    c.name
-                  )}
-                </TableCell>
+              <TableCell>
+                {editing?.id === c.id ? (
+                  <Input
+                    value={editing.address}
+                    onChange={(e) =>
+                      setEditing({ ...editing, address: e.target.value })
+                    }
+                    className="bg-background text-foreground border-border"
+                  />
+                ) : (
+                  c.address
+                )}
+              </TableCell>
 
-                <TableCell>
-                  {editing?.id === c.id ? (
-                    <Input
-                      value={editing.address}
-                      onChange={(e) =>
-                        setEditing({ ...editing, address: e.target.value })
-                      }
-                    />
-                  ) : (
-                    c.address
-                  )}
-                </TableCell>
+              <TableCell>
+                {editing?.id === c.id ? (
+                  <Input
+                    value={editing.postalCode}
+                    onChange={(e) =>
+                      setEditing({ ...editing, postalCode: e.target.value })
+                    }
+                    className="bg-background text-foreground border-border"
+                  />
+                ) : (
+                  c.postalCode
+                )}
+              </TableCell>
 
-                <TableCell>
-                  {editing?.id === c.id ? (
-                    <Input
-                      value={editing.postalCode}
-                      onChange={(e) =>
-                        setEditing({ ...editing, postalCode: e.target.value })
-                      }
-                    />
-                  ) : (
-                    c.postalCode
-                  )}
-                </TableCell>
+              <TableCell>
+                {editing?.id === c.id ? (
+                  <Input
+                    value={editing.country}
+                    onChange={(e) =>
+                      setEditing({ ...editing, country: e.target.value })
+                    }
+                    className="bg-background text-foreground border-border"
+                  />
+                ) : (
+                  c.country
+                )}
+              </TableCell>
 
-                <TableCell>
-                  {editing?.id === c.id ? (
-                    <Input
-                      value={editing.country}
-                      onChange={(e) =>
-                        setEditing({ ...editing, country: e.target.value })
-                      }
-                    />
-                  ) : (
-                    c.country
-                  )}
-                </TableCell>
+              <TableCell>
+                {editing?.id === c.id ? (
+                  <Input
+                    type="email"
+                    value={editing.email}
+                    onChange={(e) =>
+                      setEditing({ ...editing, email: e.target.value })
+                    }
+                    className="bg-background text-foreground border-border"
+                  />
+                ) : (
+                  c.email
+                )}
+              </TableCell>
 
-                <TableCell>
-                  {editing?.id === c.id ? (
-                    <Input
-                      type="email"
-                      value={editing.email}
-                      onChange={(e) =>
-                        setEditing({ ...editing, email: e.target.value })
-                      }
-                    />
-                  ) : (
-                    c.email
-                  )}
-                </TableCell>
+              <TableCell className="text-center">
+                {editing?.id === c.id ? (
+                  <div className="flex justify-center gap-3">
+                    <Button size="sm" onClick={handleSave}>
+                      Save
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setEditing(null)}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex justify-center gap-3">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setEditing(c)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      onClick={() => deleteConsignee(c.id)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                )}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  </section>
+);
 
-                <TableCell className="text-center">
-                  {editing?.id === c.id ? (
-                    <div className="flex justify-center gap-3">
-                      <button className="text-green-600" onClick={handleSave}>
-                        Save
-                      </button>
-                      <button
-                        className="text-gray-500"
-                        onClick={() => setEditing(null)}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="flex justify-center gap-3">
-                      <button
-                        className="text-[rgb(25,52,85)]"
-                        onClick={() => setEditing(c)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="text-red-600"
-                        onClick={() => deleteConsignee(c.id)}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  )}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-    </section>
-  );
 }

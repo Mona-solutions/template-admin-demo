@@ -14,11 +14,10 @@ export default function TicketsTable({
   deleteTicket,
 }: TicketsTableProps) {
   return (
-    <div className="bg-white shadow rounded-lg overflow-hidden">
-      <h2 className="text-md font-semibold p-4 border-b">Recent Tickets</h2>
-
+    <div className="rounded-xl overflow-hidden backdrop-blur border shadow-lg">
+      <h2 className="text-md font-semibold p-4 border-b border-gray-200 dark:border-slate-800">Recent Tickets</h2>
       <table className="w-full text-sm text-gray-800">
-        <thead className="bg-gray-100 text-[rgb(25,52,85)] ">
+        <thead className="bg-muted/50 text-foreground border-b dark:!border-transparent">
           <tr>
             <th className="p-3 font-semibold">ID</th>
             <th className="p-3 font-semibold">Subject</th>
