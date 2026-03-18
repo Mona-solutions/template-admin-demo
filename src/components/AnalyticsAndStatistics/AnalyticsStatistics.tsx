@@ -16,21 +16,18 @@ export default function AnalyticsStatistics() {
     statusDistribution,
   } = useAnalyticsData(shipments);
 
-  const headerClass =
-    "bg-[rgb(25,52,85)] text-white p-6 rounded-lg shadow-md mb-6";
-
   // UI cuando no hay datos
   if (shipments.length === 0) {
     return (
       <div className="space-y-6">
-        <div className={headerClass}>
+        <div className="bg-[rgb(25,52,85)] text-white p-6 rounded-lg shadow-md mb-6 dark:bg-[#DEE6F0] dark:text-[rgb(25,52,85)]">
           <h1 className="text-2xl font-bold">Analytics & Statistics</h1>
-          <p className="text-gray-200">
+          <p className="text-gray-200 dark:text-gray-800">
             Insights will appear once you create shipments.
           </p>
         </div>
 
-        <div className="text-center mt-20 text-gray-500 text-lg">
+        <div className="text-center mt-20 text-gray-400 text-lg">
           No shipments available yet.
           <br />
           <span className="text-sm">
@@ -43,7 +40,7 @@ export default function AnalyticsStatistics() {
 
   return (
     <div className="space-y-6">
-      <div className={headerClass}>
+      <div className="bg-[rgb(25,52,85)] text-white p-6 rounded-lg shadow-md mb-6 dark:bg-[#DEE6F0] dark:text-[rgb(25,52,85)]">
         <h1 className="text-2xl font-bold flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +58,7 @@ export default function AnalyticsStatistics() {
           </svg>
           Analytics & Statistics
         </h1>
-        <p className="text-gray-200">
+        <p className="text-gray-200 dark:text-gray-800">
           Insights and performance of your real shipments.
         </p>
       </div>

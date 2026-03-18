@@ -355,9 +355,6 @@ export default function RegisterShipment({ onCreate }: RegisterShipmentProps) {
           />
         </div>
 
-        {/* ========================= */}
-        {/* ✅ Submit */}
-        {/* ========================= */}
         <div className="text-right">
           <button
             type="submit"
@@ -369,7 +366,7 @@ export default function RegisterShipment({ onCreate }: RegisterShipmentProps) {
 
           {successMessage && (
             <p className="text-green-600 mt-3 font-medium text-right animate-fade-in">
-              ✅ {successMessage}
+              {successMessage}
             </p>
           )}
         </div>

@@ -17,7 +17,7 @@ const menuItems: { page: Page; label: string }[] = [
 
 export default function Aside({ activePage, onNavigate }: AsideProps) {
   return (
-    <aside className="w-72 pt-4 shadow-lg shadow-[black] border-r-stone-200">
+    <aside className="w-72 pt-4 bg-white dark:bg-card border-r border-slate-200 dark:border-slate-700">
       <div className="flex items-center border-b-2  gap-2 justify-center pb-4 mb-6">
         <img className="h-14 w-17 hidden dark:block" src="/DroppitLogo-light.png" alt="droppit logo" />
         <img  className="h-14 w-17 dark:hidden" src="/DroppitLogo-dark.png" alt="droppit logo" />
@@ -34,7 +34,7 @@ export default function Aside({ activePage, onNavigate }: AsideProps) {
                 ${
                   activePage === page
                     ? "bg-[rgb(25,52,85)] text-white dark:bg-[#DEE6F0] dark:text-[rgb(25,52,85)] dark:font-semibold"
-                    : "hover:bg-muted/100 dark:hover:bg-muted/30"
+                    : "text-[rgb(25,52,85)] dark:text-[#DEE6F0] hover:bg-slate-100 dark:hover:bg-muted/30"
                 }
               `}
               onClick={() => onNavigate(page)}

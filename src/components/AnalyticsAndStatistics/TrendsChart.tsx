@@ -14,7 +14,7 @@ interface TrendsChartProps {
 
 export default function TrendsChart({ data }: TrendsChartProps) {
   return (
-    <div className="bg-white p-4 rounded shadow">
+    <div className="p-4 rounded-xl border bg-white dark:bg-[#020617] dark:border-2 dark:border-slate-200/60 shadow-sm dark:shadow-none">
       <h2 className="text-lg font-semibold mb-4">Monthly Shipment Trends</h2>
       <ResponsiveContainer width="100%" height={250}>
         <LineChart data={data}>

@@ -12,9 +12,12 @@ export default function ShipmentsTable({
   onDelete: (id: string) => void;
 }) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-border bg-card text-card-foreground shadow-sm">
+    <div
+      className="overflow-x-auto rounded-xl border border-border bg-card text-card-foreground shadow-sm  dark:border-2
+    dark:border-slate-200/60"
+    >
       <table className="w-full border-collapse text-sm">
-        <thead className="bg-muted/50 text-foreground">
+        <thead className="bg-muted/50 text-foreground dark:bg-[#DEE6F0] dark:text-[rgb(25,52,85)]">
           <tr className="border-b border-border">
             <th className="p-3 font-semibold text-center">Order #</th>
             <th className="p-3 font-semibold text-center">Tracking ID</th>
@@ -28,7 +31,10 @@ export default function ShipmentsTable({
         <tbody className="divide-y divide-border">
           {shipments.length === 0 && (
             <tr>
-              <td colSpan={6} className="text-center py-10 text-muted-foreground">
+              <td
+                colSpan={6}
+                className="text-center py-10 text-muted-foreground"
+              >
                 No shipments found.
               </td>
             </tr>

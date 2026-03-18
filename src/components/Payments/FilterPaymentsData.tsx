@@ -56,7 +56,7 @@ function ShadcnDropdown<T extends string>({
             width,
             "bg-background text-foreground border-border",
             "hover:bg-muted/60 dark:hover:bg-muted/30",
-            "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+            "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-2 dark:border-white/10",
           ].join(" ")}
         >
           <span className="flex items-center gap-1 min-w-0">
@@ -83,7 +83,10 @@ function ShadcnDropdown<T extends string>({
 
       <DropdownMenuContent
         align="start"
-        className={[width, "bg-popover text-popover-foreground border-border shadow-md"].join(" ")}
+        className={[
+          width,
+          "bg-popover text-popover-foreground border-border shadow-md",
+        ].join(" ")}
       >
         <DropdownMenuLabel className="text-xs text-muted-foreground">
           {label || "Select"}
@@ -102,8 +105,6 @@ function ShadcnDropdown<T extends string>({
     </DropdownMenu>
   );
 }
-
-
 
 export default function FilterPaymentsData({
   search,
@@ -143,7 +144,7 @@ export default function FilterPaymentsData({
       {/* DATE RANGE PICKER */}
       <Popover>
         <PopoverTrigger asChild>
-         <Button
+          <Button
             variant="outline"
             className={[
               "flex items-center gap-2",
@@ -151,34 +152,32 @@ export default function FilterPaymentsData({
               "hover:bg-muted/60 dark:hover:bg-muted/30",
               "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
             ].join(" ")}
-            >
-               <CalendarIcon className="w-4 h-4 text-muted-foreground" />
-              {dateRange?.from ? (
-                dateRange.to ? (
-                  <>
-                    {format(dateRange.from, "MMM d, yyyy")} -{" "}
-                    {format(dateRange.to, "MMM d, yyyy")}
-                  </>
-                ) : (
-                  format(dateRange.from, "MMM d, yyyy")
-                )
+          >
+            <CalendarIcon className="w-4 h-4 text-muted-foreground" />
+            {dateRange?.from ? (
+              dateRange.to ? (
+                <>
+                  {format(dateRange.from, "MMM d, yyyy")} -{" "}
+                  {format(dateRange.to, "MMM d, yyyy")}
+                </>
               ) : (
-                "Select Date Range"
-              )}
-           </Button>
-
+                format(dateRange.from, "MMM d, yyyy")
+              )
+            ) : (
+              "Select Date Range"
+            )}
+          </Button>
         </PopoverTrigger>
 
-       <PopoverContent className="p-0 bg-popover text-popover-foreground border-border">
+        <PopoverContent className="p-0 bg-popover text-popover-foreground border-border">
           <Calendar
-          mode="range"
-          selected={dateRange}
-          onSelect={setDateRange}
-          numberOfMonths={2}
-          initialFocus
-          className="bg-popover text-popover-foreground" />
-       </PopoverContent>
-
+            mode="range"
+            selected={dateRange}
+            onSelect={setDateRange}
+            numberOfMonths={2}
+            className="bg-popover text-popover-foreground dark:border-2 dark:border-slate-200/60"
+          />
+        </PopoverContent>
       </Popover>
     </div>
   );

@@ -53,14 +53,7 @@ export default function ShipmentDetailsDialog({
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
-      <DialogContent
-        className="
-          max-w-3xl
-          bg-white text-slate-900
-          dark:bg-[#020617] dark:text-slate-100
-          border border-slate-200 dark:border-slate-800
-        "
-      >
+      <DialogContent className="max-h-[90vh] overflow-y-auto max-w-3xl bg-white text-slate-900 dark:bg-[#020617] dark:text-slate-100 border border-slate-200 dark:border-slate-800">
         <DialogHeader>
           <DialogTitle
             className="
@@ -96,7 +89,6 @@ export default function ShipmentDetailsDialog({
           />
         ) : (
           <div className="space-y-6">
-            {/* General */}
             <section
               className="
                 rounded-lg shadow p-5
@@ -194,7 +186,6 @@ export default function ShipmentDetailsDialog({
               </div>
             </section>
 
-            {/* Logistics */}
             <section
               className="
                 rounded-lg shadow p-5
@@ -235,7 +226,9 @@ export default function ShipmentDetailsDialog({
                   <strong className="text-slate-900 dark:text-slate-100">
                     Date:
                   </strong>{" "}
-                  {shipment.date ? new Date(shipment.date).toLocaleDateString() : "—"}
+                  {shipment.date
+                    ? new Date(shipment.date).toLocaleDateString()
+                    : "—"}
                 </p>
               </div>
             </section>
@@ -245,9 +238,9 @@ export default function ShipmentDetailsDialog({
                 onClick={() => setIsEditing(true)}
                 className="
                   px-5 py-2 rounded-md transition
-                  bg-[rgb(25,52,85)] text-white hover:bg-[rgb(18,40,68)]
+                  bg-[rgb(25,52,85)] text-white hover:bg-[rgb(45,84,135)] 
                   dark:bg-[rgb(25,52,85)] dark:hover:bg-[rgb(35,70,115)]
-                  focus:outline-none focus:ring-2 focus:ring-offset-2
+                  focus:outline-none focus:ring-0 focus:ring-offset-0
                   focus:ring-[rgb(25,52,85)]
                   dark:focus:ring-offset-[#020617]
                 "

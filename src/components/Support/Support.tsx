@@ -16,22 +16,19 @@ export default function Support() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-[rgb(25,52,85)] text-white p-6 rounded-lg shadow-md">
+      <div className="bg-[rgb(25,52,85)] text-white p-6 rounded-lg shadow-md dark:bg-[#DEE6F0] dark:text-[rgb(25,52,85)]">
         <h1 className="text-2xl font-bold">Support</h1>
-        <p className="text-gray-200">
-           Get help, report issues, or find answers to common questions.
-          </p>
+        <p className="text-gray-200  dark:text-gray-800">
+          Get help, report issues, or find answers to common questions.
+        </p>
       </div>
 
-      {/* Actions */}
       <SupportActions
         onCreateOpen={setOpen}
         onOpenFaqs={setOpenFaqs}
         onOpenChat={setOpenChat}
       />
 
-      {/* Modals */}
       <CreateTicketModal
         open={open}
         onClose={() => setOpen(false)}
@@ -41,7 +38,6 @@ export default function Support() {
       <FAQModal open={openFaqs} onClose={() => setOpenFaqs(false)} />
       <LiveChatModal open={openChat} onClose={() => setOpenChat(false)} />
 
-      {/* Table */}
       <TicketsTable
         tickets={tickets}
         updateTicket={updateTicket}

@@ -21,9 +21,8 @@ export default function LiveChatModal({
   };
 
   return open ? (
-    <div className="fixed bottom-4 right-4 w-[260px] bg-white shadow-lg rounded-xl border animate-in slide-in-from-bottom dark:bg-muted/0 text-slate-100 placeholder:text-slate-500 border border-white/10">
-      {/* Header */}
-      <div className="bg-[rgb(25,52,85)] text-white px-4 py-2 rounded-t-xl flex justify-between items-center dark:bg-white text-[rgb(25,52,85)] dark:text-[rgb(25,52,85)]">
+    <div className="fixed bottom-4 right-4 w-[260px] bg-white shadow-lg rounded-xl border animate-in slide-in-from-bottom dark:bg-muted/0 text-slate-100 placeholder:text-slate-500 border-white/10 dark:border-2 dark:border-white/10">
+      <div className="bg-[rgb(25,52,85)] text-white px-4 py-2 rounded-t-xl flex justify-between items-center dark:bg-white dark:text-[rgb(25,52,85)]">
         <span className="text-xs font-semibold">💬 Live Support</span>
         <button
           onClick={onClose}
@@ -33,20 +32,20 @@ export default function LiveChatModal({
         </button>
       </div>
 
-      {/* Messages */}
       <div className="h-[180px] overflow-y-auto p-3 space-y-2 text-xs text-gray-800">
         {messages.map((m, i) => (
           <div
             key={i}
             className={m.from === "You" ? "text-right" : "text-left"}
           >
-            <p className="font-semibold text-[rgb(25,52,85)] dark:text-[#E6EDF5]">{m.from}:</p>
+            <p className="font-semibold text-[rgb(25,52,85)] dark:text-[#E6EDF5]">
+              {m.from}:
+            </p>
             <p className="opacity-90 text-muted-foreground">{m.text}</p>
           </div>
         ))}
       </div>
 
-      {/* Input */}
       <form onSubmit={sendMessage} className="p-3 border-t">
         <Input
           value={input}
@@ -56,7 +55,7 @@ export default function LiveChatModal({
         />
         <button
           onClick={sendMessage}
-          className="w-full bg-[rgb(25,52,85)] text-white rounded-md py-1 text-[10px] font-semibold hover:bg-[rgb(20,46,75)] transition dark:bg-white text-[rgb(25,52,85)] hover:bg-gray-100 dark:text-[rgb(25,52,85)] dark:hover:bg-slate-400"
+          className="w-full bg-[rgb(25,52,85)] rounded-md py-1 text-[10px] font-semibold hover:bg-[rgb(20,46,75)] transition dark:bg-white text-[rgb(25,52,85)] dakr:hover:bg-gray-100 dark:text-[rgb(25,52,85)] dark:hover:bg-slate-400"
         >
           Send
         </button>

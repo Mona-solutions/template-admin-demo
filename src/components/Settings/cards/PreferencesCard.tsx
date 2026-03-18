@@ -10,7 +10,7 @@ type Props = {
 
 export function PreferencesCard({ prefs, onChange, onReset }: Props) {
   return (
-    <section className="rounded-xl border p-6 space-y-6">
+    <section className="rounded-xl border p-6 space-y-6 bg-white dark:bg-card dark:border-2 dark:border-slate-200/60">
       <div className="flex items-start justify-between gap-4">
         <div>
           <h2 className="text-lg font-semibold">Preferences</h2>
@@ -29,7 +29,9 @@ export function PreferencesCard({ prefs, onChange, onReset }: Props) {
           <Label>Language</Label>
           <select
             value={prefs.language}
-            onChange={(e) => onChange({ language: e.target.value as Preferences["language"] })}
+            onChange={(e) =>
+              onChange({ language: e.target.value as Preferences["language"] })
+            }
             className="w-full h-10 rounded-md border bg-background px-3 text-sm"
           >
             <option value="en">English</option>
@@ -44,7 +46,10 @@ export function PreferencesCard({ prefs, onChange, onReset }: Props) {
           <Label>Theme</Label>
           <div className="flex flex-col gap-2 rounded-md border p-3">
             {(["system", "light", "dark"] as const).map((t) => (
-              <label key={t} className="flex items-center gap-2 text-sm capitalize">
+              <label
+                key={t}
+                className="flex items-center gap-2 text-sm capitalize"
+              >
                 <input
                   type="radio"
                   name="theme"
@@ -57,7 +62,8 @@ export function PreferencesCard({ prefs, onChange, onReset }: Props) {
             ))}
           </div>
           <p className="text-xs text-muted-foreground">
-            Theme preference is saved locally. You can wire it to your app theme provider later.
+            Theme preference is saved locally. You can wire it to your app theme
+            provider later.
           </p>
         </div>
       </div>

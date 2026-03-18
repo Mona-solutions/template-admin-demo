@@ -1,6 +1,7 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import type { Shipment } from "../types/Shipment";
 import type { ShipmentCreateData } from "../types/ShipmentCreateData";
+import { STORAGE_KEYS } from "@/storage/storageKeys";
 
 interface ShipmentsContextType {
   shipments: Shipment[];
@@ -12,13 +13,30 @@ interface ShipmentsContextType {
 const ShipmentsContext = createContext<ShipmentsContextType | null>(null);
 
 export function ShipmentsProvider({ children }: { children: React.ReactNode }) {
-  const [shipments, setShipments] = useState<Shipment[]>(() =>
-    JSON.parse(localStorage.getItem("shipments") || "[]")
-  );
+  const [shipments, setShipments] = useState<Shipment[]>(() => {
+    try {
+      const rawV1 = localStorage.getItem(STORAGE_KEYS.shipments);
+      if (rawV1) {
+        const parsed = JSON.parse(rawV1);
+        return Array.isArray(parsed) ? (parsed as Shipment[]) : [];
+      }
 
-  // localStorage sync
+      const rawOld = localStorage.getItem("shipments");
+      if (rawOld) {
+        const parsedOld = JSON.parse(rawOld);
+        return Array.isArray(parsedOld) ? (parsedOld as Shipment[]) : [];
+      }
+
+      return [];
+    } catch {
+      return [];
+    }
+  });
+
   useEffect(() => {
-    localStorage.setItem("shipments", JSON.stringify(shipments));
+    try {
+      localStorage.setItem(STORAGE_KEYS.shipments, JSON.stringify(shipments));
+    } catch {}
   }, [shipments]);
 
   function create(data: ShipmentCreateData) {

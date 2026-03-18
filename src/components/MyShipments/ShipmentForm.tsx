@@ -48,7 +48,6 @@ export default function ShipmentForm({
       <h2 className="font-semibold text-lg">Shipment Details</h2>
 
       <div className="grid grid-cols-2 gap-6">
-        {/* Order Number */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Order Number</label>
           <input
@@ -60,18 +59,16 @@ export default function ShipmentForm({
           />
         </div>
 
-        {/* Tracking ID (solo lectura) */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Tracking ID</label>
           <input
             type="text"
             value={form.trackingId}
             readOnly
-            className="w-full px-3 py-2 rounded-md border border-gray-200 bg-gray-100 text-gray-600 dark:bg-black dark:text-slate-100 dark:border-slate-700 dark:placeholder:text-slate-200" 
+            className="w-full px-3 py-2 rounded-md border border-gray-200 bg-gray-100 text-gray-600 dark:bg-black dark:text-slate-100 dark:border-slate-700 dark:placeholder:text-slate-200"
           />
         </div>
 
-        {/* Status */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Status</label>
           <Select
@@ -91,7 +88,6 @@ export default function ShipmentForm({
           </Select>
         </div>
 
-        {/* Type */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Type</label>
           <Select value={form.type} onValueChange={(v) => onChange("type", v)}>
@@ -108,7 +104,6 @@ export default function ShipmentForm({
           </Select>
         </div>
 
-        {/* Service */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Service</label>
           <Select
@@ -128,7 +123,6 @@ export default function ShipmentForm({
           </Select>
         </div>
 
-        {/* Pickup */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Pickup</label>
           <Select
@@ -148,7 +142,6 @@ export default function ShipmentForm({
           </Select>
         </div>
 
-        {/* Delivery */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Delivery</label>
           <Select
@@ -168,7 +161,6 @@ export default function ShipmentForm({
           </Select>
         </div>
 
-        {/* Sender */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Sender</label>
           <input
@@ -179,7 +171,6 @@ export default function ShipmentForm({
           />
         </div>
 
-        {/* Sender Email */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Sender Email</label>
           <input
@@ -191,7 +182,6 @@ export default function ShipmentForm({
           />
         </div>
 
-        {/* Recipient */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Recipient</label>
           <input
@@ -202,7 +192,6 @@ export default function ShipmentForm({
           />
         </div>
 
-        {/* Recipient Email */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Recipient Email</label>
           <input
@@ -214,7 +203,6 @@ export default function ShipmentForm({
           />
         </div>
 
-        {/* ✅ Shipment Date — ahora solo ocupa UNA columna */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Shipment Date</label>
           <Popover>
@@ -239,13 +227,13 @@ export default function ShipmentForm({
         </div>
       </div>
 
-      {/* BOTONES */}
       <div className="flex justify-between pt-4">
         {onCancel && (
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 rounded-md text-sm text-gray-500 dark:text-[#E6EDF5] hover:text-gray-700 dark:hover:text-white hover:bg-muted/60 dark:hover:bg-muted/30 transition">
+            className="px-4 py-2 rounded-md text-sm text-gray-600 dark:text-[#E6EDF5] hover:text-gray-700 dark:hover:text-white hover:bg-muted/60 dark:hover:bg-muted/30 transition"
+          >
             Cancel
           </button>
         )}
@@ -253,7 +241,7 @@ export default function ShipmentForm({
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="bg-[rgb(25,52,85)] hover:bg-[rgb(18,40,68)] dark:text-[#E6EDF5]"
+          className="bg-[rgb(25,52,85)] hover:bg-[rgb(45,84,135)] dark:text-[#E6EDF5]"
         >
           {isSubmitting ? "Saving..." : "Save"}
         </Button>

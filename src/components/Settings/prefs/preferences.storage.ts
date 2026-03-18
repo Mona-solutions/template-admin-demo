@@ -21,8 +21,6 @@ export function loadPreferences(): Preferences {
 export function savePreferences(prefs: Preferences) {
    try {
     localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
-    window.dispatchEvent(new Event("prefs_updated")); // ✅ important
-  } catch {
-    // ignore
-  }
+    window.dispatchEvent(new Event("prefs_updated"));
+  } catch {}
 }

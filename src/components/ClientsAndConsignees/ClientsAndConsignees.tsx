@@ -1,7 +1,4 @@
 import { useState } from "react";
-import { ClientsProvider } from "@/context/ClientsContext";
-import { ConsigneesProvider } from "@/context/ConsigneesContext";
-
 import ClientDirectory from "./ClientDirectory";
 import ConsigneeDirectory from "./ConsigneeDirectory";
 
@@ -12,10 +9,10 @@ export default function ClientsAndConsignees() {
 
   return (
     <div className="w-full mx-auto space-y-6">
-      <div className="bg-[rgb(25,52,85)] text-white p-6 rounded-lg shadow-md flex items-center justify-between">
+      <div className="bg-[rgb(25,52,85)] text-white p-6 rounded-lg shadow-md flex items-center justify-between dark:bg-[#DEE6F0] dark:text-[rgb(25,52,85)] ">
         <div>
           <h1 className="text-2xl font-bold">Clients & Consignees</h1>
-          <p className="text-gray-200">
+          <p className="text-gray-200 dark:text-gray-800">
             Manage your clients and consignees information.
           </p>
         </div>
@@ -26,7 +23,7 @@ export default function ClientsAndConsignees() {
           className={`px-5 py-2 rounded-lg font-medium transition ${
             activeTab === "clients"
               ? "bg-[#193455] text-white shadow"
-              : "bg-gray-200 text-gray-700 dark:text-[rgb(25,52,85)] dark:hover:bg-slate-400"
+              : "bg-gray-200 hover:bg-slate-300 text-gray-700 dark:text-[rgb(25,52,85)] dark:hover:bg-slate-300"
           }`}
           onClick={() => setActiveTab("clients")}
         >
@@ -37,7 +34,7 @@ export default function ClientsAndConsignees() {
           className={`px-5 py-2 rounded-lg font-medium transition ${
             activeTab === "consignees"
               ? "bg-[#193455] text-white shadow"
-              : "bg-gray-200 text-gray-700 dark:text-[rgb(25,52,85)] dark:hover:bg-slate-400"
+              : "bg-gray-200 hover:bg-slate-300 text-gray-700 dark:text-[rgb(25,52,85)] dark:hover:bg-slate-300"
           }`}
           onClick={() => setActiveTab("consignees")}
         >
@@ -45,12 +42,8 @@ export default function ClientsAndConsignees() {
         </button>
       </div>
 
-      <ClientsProvider>
-        <ConsigneesProvider>
-          {activeTab === "clients" && <ClientDirectory />}
-          {activeTab === "consignees" && <ConsigneeDirectory />}
-        </ConsigneesProvider>
-      </ClientsProvider>
+      {activeTab === "clients" && <ClientDirectory />}
+      {activeTab === "consignees" && <ConsigneeDirectory />}
     </div>
   );
 }

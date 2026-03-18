@@ -22,10 +22,10 @@ export default function Home() {
 
   return (
     <div>
-      <header className="flex justify-between items-center rounded-lg px-6 py-4 border-b-2 w-full dark:border border-border">
+      <header className="flex justify-between items-center rounded-lg px-6 py-4 border-b-2 w-full dark:border-2 dark:border-slate-200/60">
         <div className="flex gap-2">
           <Select value={country} onValueChange={setCountry}>
-            <SelectTrigger className="w-[150px]">
+            <SelectTrigger className="w-[150px] dark:border-2 dark:border-white/10">
               <SelectValue placeholder="Country" />
             </SelectTrigger>
             <SelectContent>
@@ -36,7 +36,7 @@ export default function Home() {
           </Select>
 
           <Select value={currency} onValueChange={setCurrency}>
-            <SelectTrigger className="w-[120px]">
+            <SelectTrigger className="w-[120px] dark:border-2 dark:border-white/10">
               <SelectValue placeholder="Currency" />
             </SelectTrigger>
             <SelectContent>
@@ -54,13 +54,13 @@ export default function Home() {
 
       <main className="py-4">
         <div>
-          <GreetingUser/>
+          <GreetingUser />
         </div>
-        <div className="mt-10 dark:border rounded-lg">
-        <ShipmentData shipments={shipments} />
+        <div className="mt-10 dark:border-2 dark:border-slate-200/60 rounded-lg">
+          <ShipmentData shipments={shipments} />
         </div>
-        <div className="mt-10 dark:border rounded-lg">
-        <RecentActivity shipments={shipments} />
+        <div className="mt-10 dark:border-2 dark:border-slate-200/60 rounded-lg">
+          <RecentActivity shipments={shipments} />
         </div>
       </main>
     </div>

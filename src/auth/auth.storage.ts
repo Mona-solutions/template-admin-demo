@@ -42,7 +42,6 @@ export function clearAuthState() {
   try {
     localStorage.removeItem(AUTH_STORAGE_KEY);
   } catch {
-    // ignore
   }
 }
 
@@ -50,6 +49,5 @@ export function saveAuthState(state: AuthState) {
   try {
     localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(state));
   } catch {
-    // ignore
   }
 }

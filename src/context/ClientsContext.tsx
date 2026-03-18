@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
+import { STORAGE_KEYS } from "@/storage/storageKeys";
 
 export interface Client {
   id: string;
@@ -21,12 +22,29 @@ const ClientsContext = createContext<ClientsContextType | null>(null);
 
 export function ClientsProvider({ children }: { children: ReactNode }) {
   const [clients, setClients] = useState<Client[]>(() => {
-    const stored = localStorage.getItem("clients");
-    return stored ? JSON.parse(stored) : [];
+    try {
+      const rawV1 = localStorage.getItem(STORAGE_KEYS.clients);
+      if (rawV1) {
+        const parsed = JSON.parse(rawV1);
+        return Array.isArray(parsed) ? (parsed as Client[]) : [];
+      }
+
+      const rawOld = localStorage.getItem("clients");
+      if (rawOld) {
+        const parsedOld = JSON.parse(rawOld);
+        return Array.isArray(parsedOld) ? (parsedOld as Client[]) : [];
+      }
+
+      return [];
+    } catch {
+      return [];
+    }
   });
 
   useEffect(() => {
-    localStorage.setItem("clients", JSON.stringify(clients));
+    try {
+      localStorage.setItem(STORAGE_KEYS.clients, JSON.stringify(clients));
+    } catch {}
   }, [clients]);
 
   const addClient = (client: Client) => {

@@ -42,10 +42,11 @@ export default function PaymentDialog({
   };
 
   const handleSubmit = () => {
-    if (!form.invoice || !form.client || !form.amount) return;
+    const parsedAmount = parseFloat(form.amount);
+    if (!form.invoice || !form.client || isNaN(parsedAmount) || parsedAmount <= 0) return;
     onSave({
       ...form,
-      amount: parseFloat(form.amount),
+      amount: parsedAmount,
       issuedAt: form.issuedAt || new Date().toISOString().split("T")[0],
       dueAt:
         form.dueAt ||
@@ -116,7 +117,10 @@ export default function PaymentDialog({
         </div>
 
         <DialogFooter>
-          <Button className="bg-[#193455]" onClick={handleSubmit}>
+          <Button
+            className="bg-[#193455] hover:bg-[rgb(32,76,130)] dark:text-slate-200"
+            onClick={handleSubmit}
+          >
             Save
           </Button>
         </DialogFooter>

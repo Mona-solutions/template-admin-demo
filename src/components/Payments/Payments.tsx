@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import type { DateRange } from "react-day-picker";
 
 import PaymentsData from "./PaymentsData";
@@ -6,6 +6,7 @@ import FilterPaymentsData from "./FilterPaymentsData";
 import PaymentDialog from "./PaymentDialog";
 import PaymentDetailsDialog from "./PaymentsDetailDialog";
 import { Button } from "../ui/button";
+import { usePayments } from "@/context/PaymentsContext";
 
 import {
   type Payment,
@@ -29,25 +30,18 @@ function StatusBadge({ status }: { status: PaymentStatus }) {
 }
 
 export default function Payments() {
-  const [payments, setPayments] = useState<Payment[]>([]);
-
-  useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("payments") || "[]");
-    setPayments(stored);
-  }, []);
+  const { payments, addPayment, updatePayment, deletePayment } = usePayments();
 
   const handleAddPayment = (payment: Payment) => {
-    const updated = [...payments, payment];
-    setPayments(updated);
-    localStorage.setItem("payments", JSON.stringify(updated));
+    addPayment(payment);
   };
 
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<"All" | PaymentStatus>(
-    "All"
+    "All",
   );
   const [methodFilter, setMethodFilter] = useState<"All" | PaymentMethod>(
-    "All"
+    "All",
   );
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
 
@@ -100,32 +94,26 @@ export default function Payments() {
   }
 
   const handleDeletePayment = (invoice: string) => {
-    const updated = payments.filter((p) => p.invoice !== invoice);
-    setPayments(updated);
-    localStorage.setItem("payments", JSON.stringify(updated));
+    deletePayment(invoice);
   };
 
   const handleUpdatePayment = (updated: Payment) => {
-    const newList = payments.map((p) =>
-      p.invoice === updated.invoice ? updated : p
-    );
-    setPayments(newList);
-    localStorage.setItem("payments", JSON.stringify(newList));
+    updatePayment(updated);
   };
 
   return (
     <div className="space-y-6">
-      <div className="bg-[rgb(25,52,85)] text-white p-6 rounded-lg shadow-md flex items-center justify-between">
+      <div className="bg-[rgb(25,52,85)] text-white p-6 rounded-lg shadow-md flex items-center justify-between dark:bg-[#DEE6F0] dark:text-[rgb(25,52,85)]">
         <div>
-          <h1 className="text-2xl font-bold">Create & Manage Payments</h1>
-          <p className="text-gray-200">
+          <h1 className="text-2xl font-bold ">Create & Manage Payments</h1>
+          <p className="text-gray-200  dark:text-gray-800">
             Register and track all your payments easily.
           </p>
         </div>
 
         <button
           onClick={() => setDialogOpen(true)}
-          className="flex items-center gap-2 bg-white text-[rgb(25,52,85)] px-4 py-2 rounded-md font-medium shadow-sm hover:bg-gray-100 transition dark:text-[rgb(25,52,85)] dark:hover:bg-slate-400"
+          className="flex items-center gap-2 bg-white text-[rgb(25,52,85)] px-4 py-2 rounded-md font-medium shadow-sm hover:bg-slate-300 transition dark:bg-[rgb(25,52,85)] dark:text-white dark:hover:bg-[rgb(31,70,116)]"
         >
           <span className="text-lg font-bold">+</span>
           New Payment
@@ -157,66 +145,85 @@ export default function Payments() {
         setDateRange={setDateRange}
       />
 
-      <div className="rounded-xl border border-border bg-card text-card-foreground shadow-sm overflow-hidden">
-      <table className="w-full text-left text-sm">
-        <thead className="bg-muted/50 text-foreground">
-          <tr className="border-b border-border">
-            <th className="p-3 font-semibold">Invoice #</th>
-            <th className="p-3 font-semibold">Client</th>
-            <th className="p-3 font-semibold">Amount</th>
-            <th className="p-3 font-semibold">Method</th>
-            <th className="p-3 font-semibold">Status</th>
-            <th className="p-3 font-semibold">Issued</th>
-            <th className="p-3 font-semibold">Due</th>
-            <th className="p-3 font-semibold text-right">Actions</th>
-          </tr>
-        </thead>
+      <div className="rounded-xl border border-border bg-card text-card-foreground shadow-sm overflow-hidden dark:border-2 dark:border-slate-200/60">
+        <table className="w-full text-left text-sm">
+          <thead className="bg-muted/50 text-foreground dark:bg-[#DEE6F0]">
+            <tr className="border-b border-border">
+              <th className="p-3 font-semibold dark:text-[rgb(25,52,85)]">
+                Invoice #
+              </th>
+              <th className="p-3 font-semibold dark:text-[rgb(25,52,85)]">
+                Client
+              </th>
+              <th className="p-3 font-semibold dark:text-[rgb(25,52,85)]">
+                Amount
+              </th>
+              <th className="p-3 font-semibold dark:text-[rgb(25,52,85)]">
+                Method
+              </th>
+              <th className="p-3 font-semibold dark:text-[rgb(25,52,85)]">
+                Status
+              </th>
+              <th className="p-3 font-semibold dark:text-[rgb(25,52,85)]">
+                Issued
+              </th>
+              <th className="p-3 font-semibold dark:text-[rgb(25,52,85)]">
+                Due
+              </th>
+              <th className="p-3 font-semibold text-right dark:text-[rgb(25,52,85)]">
+                Actions
+              </th>
+            </tr>
+          </thead>
 
-    <tbody className="divide-y divide-border">
-      {filtered.map((p) => (
-        <PaymentDetailsDialog
-          key={p.invoice}
-          payment={p}
-          onUpdate={handleUpdatePayment}
-          onDelete={handleDeletePayment}
-        >
-          <tr className="cursor-pointer transition-colors hover:bg-muted/40">
-            <td className="p-3 font-medium">{p.invoice}</td>
-            <td className="p-3">{p.client}</td>
-            <td className="p-3">{currency(p.amount)}</td>
-            <td className="p-3">{p.method}</td>
-            <td className="p-3">
-              <StatusBadge status={p.status} />
-            </td>
-            <td className="p-3">{p.issuedAt}</td>
-            <td className="p-3">{p.dueAt}</td>
-
-            <td className="p-3 text-right">
-              <Button
-                size="sm"
-                variant="destructive"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDeletePayment(p.invoice);
-                }}
+          <tbody className="divide-y divide-border">
+            {filtered.map((p) => (
+              <PaymentDetailsDialog
+                key={p.invoice}
+                payment={p}
+                onUpdate={handleUpdatePayment}
+                onDelete={handleDeletePayment}
               >
-                Delete
-              </Button>
-            </td>
-          </tr>
-        </PaymentDetailsDialog>
-      ))}
+                <tr className="cursor-pointer transition-colors hover:bg-muted/40">
+                  <td className="p-3 font-medium">{p.invoice}</td>
+                  <td className="p-3">{p.client}</td>
+                  <td className="p-3">{currency(p.amount)}</td>
+                  <td className="p-3">{p.method}</td>
+                  <td className="p-3">
+                    <StatusBadge status={p.status} />
+                  </td>
+                  <td className="p-3">{p.issuedAt}</td>
+                  <td className="p-3">{p.dueAt}</td>
 
-      {filtered.length === 0 && (
-        <tr>
-          <td className="p-10 text-center text-muted-foreground" colSpan={8}>
-            No payments match your filters.
-          </td>
-        </tr>
-      )}
-    </tbody>
-  </table>
-</div>
+                  <td className="p-3 text-right">
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeletePayment(p.invoice);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              </PaymentDetailsDialog>
+            ))}
+
+            {filtered.length === 0 && (
+              <tr>
+                <td
+                  className="p-10 text-center text-muted-foreground"
+                  colSpan={8}
+                >
+                  No payments match your filters.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

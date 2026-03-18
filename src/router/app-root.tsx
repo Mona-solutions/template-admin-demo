@@ -129,9 +129,9 @@ function AppLayout() {
   }, []);
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-background">
       <Aside activePage={activePage} onNavigate={handleNavigate} />
-      <main className="flex-1 p-6 overflow-y-auto">
+      <main className="flex-1 p-6 overflow-y-auto bg-slate-50 dark:bg-background">
         <Outlet />
       </main>
     </div>

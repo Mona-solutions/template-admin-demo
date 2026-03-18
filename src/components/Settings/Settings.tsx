@@ -14,14 +14,26 @@ import type { Preferences } from "./prefs/preferences.types";
 import { loadPreferences, savePreferences } from "./prefs/preferences.storage";
 
 const profileSchema = z.object({
-  name: z.string().trim().min(2, "Full name must be at least 2 characters.").max(80, "Full name is too long."),
+  name: z
+    .string()
+    .trim()
+    .min(2, "Full name must be at least 2 characters.")
+    .max(80, "Full name is too long."),
   username: z
     .string()
     .trim()
     .min(3, "Username must be at least 3 characters.")
     .max(24, "Username must be at most 24 characters.")
-    .regex(/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscore (_)."),
-  bio: z.string().trim().max(160, "Bio must be at most 160 characters.").optional().or(z.literal("")),
+    .regex(
+      /^[a-zA-Z0-9_]+$/,
+      "Username can only contain letters, numbers, and underscore (_)."
+    ),
+  bio: z
+    .string()
+    .trim()
+    .max(160, "Bio must be at most 160 characters.")
+    .optional()
+    .or(z.literal("")),
   avatar: z.string().optional().nullable(),
 });
 
@@ -50,7 +62,9 @@ export default function Settings() {
     avatar: (user.avatar as string) ?? null,
   });
 
-  const [errors, setErrors] = useState<Partial<Record<keyof ProfileDraft, string>>>({});
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof ProfileDraft, string>>
+  >({});
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -108,13 +122,19 @@ export default function Settings() {
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      setErrors((prev) => ({ ...prev, avatar: "Please select a valid image file." }));
+      setErrors((prev) => ({
+        ...prev,
+        avatar: "Please select a valid image file.",
+      }));
       return;
     }
 
     const maxMb = 3;
     if (file.size > maxMb * 1024 * 1024) {
-      setErrors((prev) => ({ ...prev, avatar: `Image must be ${maxMb}MB or smaller.` }));
+      setErrors((prev) => ({
+        ...prev,
+        avatar: `Image must be ${maxMb}MB or smaller.`,
+      }));
       return;
     }
 
@@ -164,30 +184,38 @@ export default function Settings() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-[rgb(25,52,85)] text-white p-6 rounded-lg shadow-md flex items-center justify-between">
+      <div className="bg-[rgb(25,52,85)] text-white p-6 rounded-lg shadow-md flex items-center justify-between dark:bg-[#DEE6F0] dark:text-[rgb(25,52,85)]">
         <div>
           <h1 className="text-2xl font-bold">Settings</h1>
-          <p className="text-gray-200">Manage your profile, account preferences, and security settings.</p>
+          <p className="text-gray-200 dark:text-gray-800">
+            Manage your profile, account preferences, and security settings.
+          </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="outline" onClick={handleResetChanges} disabled={!isDirty || saving}>
+          <Button
+            onClick={handleResetChanges}
+            disabled={!isDirty || saving}
+            className="bg-red-600 hover:bg-red-900 dark:text-[#DEE6F0]"
+          >
             Discard
           </Button>
 
           <Button
             onClick={handleSave}
             disabled={!isDirty || saving}
-            className="bg-[rgb(25,52,85)] hover:bg-[rgb(20,40,70)]"
+            className="bg-[#DEE6F0] text-[rgb(25,52,85)] hover:bg-[rgb(196,207,222)] dark:bg-[rgb(20,40,70)] dark:text-[#DEE6F0] dark:hover:bg-[rgb(36,75,129)]"
           >
             {saving ? "Saving..." : "Save changes"}
           </Button>
         </div>
       </div>
 
-      {/* Saved */}
-      {saved && <div className="rounded-lg border px-4 py-3 text-sm">✅ Changes saved.</div>}
+      {saved && (
+        <div className="rounded-lg border px-4 py-3 text-sm">
+          Changes saved.
+        </div>
+      )}
 
       <ProfileCard
         initials={initials}
@@ -217,7 +245,11 @@ export default function Settings() {
 
       <AccountCard email={user.email ?? ""} id={user.id} />
 
-      <PreferencesCard prefs={prefs} onChange={updatePrefs} onReset={resetPrefs} />
+      <PreferencesCard
+        prefs={prefs}
+        onChange={updatePrefs}
+        onReset={resetPrefs}
+      />
 
       <SecurityCard onLogout={logout} onResetAuth={resetAuth} />
 

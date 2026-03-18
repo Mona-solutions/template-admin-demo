@@ -8,7 +8,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import type { Payment } from "./Payments";
+import type { Payment } from "@/types/Payments";
 
 export default function PaymentDetailsDialog({
   payment,
@@ -17,7 +17,6 @@ export default function PaymentDetailsDialog({
 }: {
   payment: Payment;
   onUpdate: (updated: Payment) => void;
-  onDelete: (invoice: string) => void;
   children: React.ReactNode;
 }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -44,19 +43,18 @@ export default function PaymentDetailsDialog({
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
-      <DialogContent className="max-w-3xl">
+      <DialogContent className="max-w-3xl dark:bg-[#020617]">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold text-[rgb(25,52,85)]">
+          <DialogTitle className="text-2xl font-semibold text-[rgb(25,52,85)] dark:text-[#DEE6F0]">
             {isEditing ? "Edit Payment" : "Payment Details"}
           </DialogTitle>
-          <DialogDescription className="text-sm text-gray-500">
+          <DialogDescription className="text-sm text-gray-500 dark:text-gray-200">
             {isEditing
               ? "Modify the payment information and save your changes."
               : "View complete payment information here."}
           </DialogDescription>
         </DialogHeader>
 
-        {/* ========================== MODO EDICIÓN ========================== */}
         {isEditing && (
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
@@ -64,7 +62,7 @@ export default function PaymentDetailsDialog({
                 <label className="text-sm font-medium">Client</label>
                 <input
                   type="text"
-                  className="w-full border rounded-md p-2"
+                  className="w-full border rounded-md p-2 dark:text-slate-800"
                   value={form.client}
                   onChange={(e) => change("client", e.target.value)}
                 />
@@ -74,7 +72,7 @@ export default function PaymentDetailsDialog({
                 <label className="text-sm font-medium">Amount</label>
                 <input
                   type="number"
-                  className="w-full border rounded-md p-2"
+                  className="w-full border rounded-md p-2 dark:text-slate-800"
                   value={form.amount}
                   onChange={(e) => change("amount", Number(e.target.value))}
                 />
@@ -83,7 +81,7 @@ export default function PaymentDetailsDialog({
               <div>
                 <label className="text-sm font-medium">Method</label>
                 <select
-                  className="w-full border rounded-md p-2"
+                  className="w-full border rounded-md p-2 dark:text-slate-800"
                   value={form.method}
                   onChange={(e) => change("method", e.target.value)}
                 >
@@ -97,7 +95,7 @@ export default function PaymentDetailsDialog({
               <div>
                 <label className="text-sm font-medium">Status</label>
                 <select
-                  className="w-full border rounded-md p-2"
+                  className="w-full border rounded-md p-2 dark:text-slate-800"
                   value={form.status}
                   onChange={(e) => change("status", e.target.value)}
                 >
@@ -113,19 +111,21 @@ export default function PaymentDetailsDialog({
               <Button variant="outline" onClick={() => setIsEditing(false)}>
                 Cancel
               </Button>
-              <Button type="submit" disabled={isSubmitting}>
+              <Button
+                className="dark:hover:bg-slate-300"
+                type="submit"
+                disabled={isSubmitting}
+              >
                 {isSubmitting ? "Saving..." : "Save"}
               </Button>
             </div>
           </form>
         )}
 
-        {/* ========================== MODO VISUALIZACIÓN ========================== */}
         {!isEditing && (
           <div className="space-y-6">
-            {/* SECTION: GENERAL */}
-            <section className="bg-white rounded-lg shadow p-5 border border-gray-100">
-              <h3 className="text-lg font-semibold text-[rgb(25,52,85)] mb-4">
+            <section className="bg-white rounded-lg shadow p-5 border border-gray-100 dark:bg-[#020617]">
+              <h3 className="text-lg font-semibold text-[rgb(25,52,85)] mb-4 dark:text-[#DEE6F0]">
                 General
               </h3>
               <div className="grid grid-cols-2 gap-y-2 text-sm">
@@ -149,9 +149,8 @@ export default function PaymentDetailsDialog({
               </div>
             </section>
 
-            {/* SECTION: DATES */}
-            <section className="bg-white rounded-lg shadow p-5 border border-gray-100">
-              <h3 className="text-lg font-semibold text-[rgb(25,52,85)] mb-4">
+            <section className="bg-white rounded-lg shadow p-5 border border-gray-100 dark:bg-[#020617]">
+              <h3 className="text-lg font-semibold text-[rgb(25,52,85)] mb-4 dark:text-[#DEE6F0]">
                 Dates
               </h3>
               <div className="grid grid-cols-2 gap-y-2 text-sm">
@@ -164,9 +163,13 @@ export default function PaymentDetailsDialog({
               </div>
             </section>
 
-            {/* BUTTONS */}
             <div className="flex justify-end gap-3">
-              <Button onClick={() => setIsEditing(true)}>Edit Payment</Button>
+              <Button
+                className="dark:hover:bg-slate-300"
+                onClick={() => setIsEditing(true)}
+              >
+                Edit Payment
+              </Button>
             </div>
           </div>
         )}

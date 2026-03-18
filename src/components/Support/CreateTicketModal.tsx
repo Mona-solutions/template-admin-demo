@@ -24,8 +24,8 @@ export default function CreateTicketModal({
 }: CreateTicketModalProps) {
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
-  const [category] = useState("Technical");
-  const [priority] = useState("Medium");
+  const category = "Technical";
+  const priority = "Medium";
 
   function handleSubmit() {
     if (!subject.trim()) return;

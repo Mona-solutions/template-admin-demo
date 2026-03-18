@@ -20,8 +20,8 @@ import { generateTrackingId } from "../RegisterShippment/RegisterShippment";
 export default function ShipmentDialog() {
   const { create } = useShipments();
 
-  const { addClient } = useClients();
-  const { addConsignee } = useConsignees();
+  const { clients, addClient } = useClients();
+  const { consignees, addConsignee } = useConsignees();
 
   const [open, setOpen] = useState(false);
 
@@ -52,25 +52,35 @@ export default function ShipmentDialog() {
     setIsSubmitting(true);
 
     if (form.sender && form.senderEmail) {
-      addClient({
-        id: crypto.randomUUID(),
-        name: form.sender,
-        email: form.senderEmail,
-        address: "",
-        postalCode: "",
-        country: "",
-      });
+      const exists = clients.some(
+        (c) => c.email === form.senderEmail && c.name === form.sender,
+      );
+      if (!exists) {
+        addClient({
+          id: crypto.randomUUID(),
+          name: form.sender,
+          email: form.senderEmail,
+          address: "",
+          postalCode: "",
+          country: "",
+        });
+      }
     }
 
     if (form.recipient && form.recipientEmail) {
-      addConsignee({
-        id: crypto.randomUUID(),
-        name: form.recipient,
-        email: form.recipientEmail,
-        address: "",
-        postalCode: "",
-        country: "",
-      });
+      const exists = consignees.some(
+        (c) => c.email === form.recipientEmail && c.name === form.recipient,
+      );
+      if (!exists) {
+        addConsignee({
+          id: crypto.randomUUID(),
+          name: form.recipient,
+          email: form.recipientEmail,
+          address: "",
+          postalCode: "",
+          country: "",
+        });
+      }
     }
 
     create({
@@ -103,14 +113,14 @@ export default function ShipmentDialog() {
       <DialogTrigger asChild>
         <button
           type="button"
-          className=" flex items-center gap-2 px-4 py-2 rounded-md font-semibold shadow bg-white text-[rgb(25,52,85)] hover:bg-gray-100 dark:text-[#E6EDF5] dark:bg-[rgb(25,52,85)] dark:hover:bg-[rgb(56, 94, 144)]"
+          className=" flex items-center gap-2 px-4 py-2 rounded-md font-semibold shadow bg-white text-[rgb(25,52,85)] hover:bg-slate-300 transition dark:text-[#E6EDF5] dark:bg-[rgb(25,52,85)] dark:hover:bg-[rgb(31,70,116)]"
         >
           <span className="text-lg">＋</span>
           New Shipment
         </button>
       </DialogTrigger>
 
-      <DialogContent className="max-w-3xl">
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-[rgb(25,52,85)] dark:text-[#E6EDF5]">
             Create Shipment

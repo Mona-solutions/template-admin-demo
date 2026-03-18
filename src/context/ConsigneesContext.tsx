@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
+import { STORAGE_KEYS } from "@/storage/storageKeys";
 
 export interface Consignee {
   id: string;
@@ -21,12 +22,29 @@ const ConsigneesContext = createContext<ConsigneesContextType | null>(null);
 
 export function ConsigneesProvider({ children }: { children: ReactNode }) {
   const [consignees, setConsignees] = useState<Consignee[]>(() => {
-    const stored = localStorage.getItem("consignees");
-    return stored ? JSON.parse(stored) : [];
+    try {
+      const rawV1 = localStorage.getItem(STORAGE_KEYS.consignees);
+      if (rawV1) {
+        const parsed = JSON.parse(rawV1);
+        return Array.isArray(parsed) ? (parsed as Consignee[]) : [];
+      }
+
+      const rawOld = localStorage.getItem("consignees");
+      if (rawOld) {
+        const parsedOld = JSON.parse(rawOld);
+        return Array.isArray(parsedOld) ? (parsedOld as Consignee[]) : [];
+      }
+
+      return [];
+    } catch {
+      return [];
+    }
   });
 
   useEffect(() => {
-    localStorage.setItem("consignees", JSON.stringify(consignees));
+    try {
+      localStorage.setItem(STORAGE_KEYS.consignees, JSON.stringify(consignees));
+    } catch {}
   }, [consignees]);
 
   const addConsignee = (c: Consignee) => {

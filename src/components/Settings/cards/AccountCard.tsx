@@ -8,7 +8,7 @@ type Props = {
 
 export function AccountCard({ email, id }: Props) {
   return (
-    <section className="rounded-xl border p-6 space-y-6">
+    <section className="rounded-xl border p-6 space-y-6 bg-white dark:bg-card dark:border-2 dark:border-slate-200/60">
       <div>
         <h2 className="text-lg font-semibold">Account</h2>
         <p className="text-sm text-muted-foreground">

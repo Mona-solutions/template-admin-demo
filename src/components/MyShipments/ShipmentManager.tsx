@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { Shipment } from "../../types/Shipment";
 import { SHIPMENT_STATUSES, type ShipmentStatus } from "../../types/Shipment";
 import { useShipments } from "../../context/ShipmentsContext";
 
 import ShipmentsTable from "../MyShipments/ShipmentsTable";
-import Pagination from "../MyShipments/Pagination";
 import { Button } from "../../components/ui/button";
 import {
   DropdownMenu,
@@ -28,36 +27,41 @@ export default function ShipmentsManager() {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredShipments = shipments.filter((s) => {
-    const matchesSearch =
-      s.orderNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      s.trackingId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      s.sender.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      s.recipient.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredShipments = useMemo(
+    () =>
+      shipments.filter((s) => {
+        const matchesSearch =
+          s.orderNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          s.trackingId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          s.sender.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          s.recipient.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesStatus =
-      selectedStatus === "All" || s.status === selectedStatus;
+        const matchesStatus =
+          selectedStatus === "All" || s.status === selectedStatus;
 
-    return matchesSearch && matchesStatus;
-  });
+        return matchesSearch && matchesStatus;
+      }),
+    [shipments, searchTerm, selectedStatus],
+  );
 
-  const sortedShipments =
-    selectedSort === "Newest First"
-      ? [...filteredShipments].sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-        )
-      : selectedSort === "Oldest First"
-      ? [...filteredShipments].sort(
-          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-        )
-      : filteredShipments;
+  const sortedShipments = useMemo(() => {
+    if (selectedSort === "Newest First")
+      return [...filteredShipments].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+      );
+    if (selectedSort === "Oldest First")
+      return [...filteredShipments].sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+      );
+    return filteredShipments;
+  }, [filteredShipments, selectedSort]);
 
   return (
     <div className="space-y-10">
-      <div className="bg-[rgb(25,52,85)] text-white p-6 rounded-lg shadow-md flex justify-between items-center dark:bg-white text-[rgb(25,52,85)] dark:text-[rgb(25,52,85)]">
+      <div className="bg-[rgb(25,52,85)] text-white p-6 rounded-lg shadow-md flex justify-between items-center dark:bg-[#DEE6F0] dark:text-[rgb(25,52,85)]">
         <div>
           <h1 className="text-2xl font-bold">Create & Manage Shipments</h1>
-          <p className="text-gray-200 dark:text-black">
+          <p className="text-gray-200 dark:text-gray-800">
             Register and track all your shipments easily.
           </p>
         </div>
@@ -100,7 +104,7 @@ function ShipmentsList({
   setSelectedStatus: (val: ShipmentStatus) => void;
   selectedSort: "Sort by Date" | "Newest First" | "Oldest First";
   setSelectedSort: (
-    val: "Sort by Date" | "Newest First" | "Oldest First"
+    val: "Sort by Date" | "Newest First" | "Oldest First",
   ) => void;
 }) {
   return (
@@ -137,8 +141,6 @@ function ShipmentsList({
         onEdit={onEdit}
         onDelete={onDelete}
       />
-
-      <Pagination />
     </div>
   );
 }
@@ -166,7 +168,7 @@ function Dropdown({
             width,
             "bg-background text-foreground border-border",
             "hover:bg-muted/60 dark:hover:bg-muted/30",
-            "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+            "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-2 dark:border-white/10",
           ].join(" ")}
         >
           <span className="truncate">
@@ -205,4 +207,3 @@ function Dropdown({
     </DropdownMenu>
   );
 }
-

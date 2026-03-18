@@ -12,12 +12,11 @@ export default function ShipmentData({ shipments }: { shipments: Shipment[] }) {
   }).length;
 
   const pendingOrFailed = shipments.filter(
-    (s) => s.status !== "Delivered"
+    (s) => s.status === "Pending" || s.status === "Failed",
   ).length;
 
   const markets = new Set(shipments.map((s) => s.delivery)).size;
 
-  // ✅ Estado vacío — sin envíos
   if (shipments.length === 0) {
     return (
       <div className="text-center py-20">
@@ -32,7 +31,7 @@ export default function ShipmentData({ shipments }: { shipments: Shipment[] }) {
           onClick={() =>
             (window.location.href = "/app/my-shipments?create=true")
           }
-          className="px-6 py-3 bg-[rgb(25,52,85)] text-white rounded-md hover:bg-[rgb(18,40,68)] transition dark:bg-[#DEE6F0] dark:font-semibold hover:bg-gray-100 dark:text-[rgb(25,52,85)] dark:hover:bg-slate-400"
+          className="px-6 py-3 bg-[rgb(25,52,85)] text-white rounded-md hover:bg-[rgb(45,84,135)] transition dark:bg-[#DEE6F0] dark:font-semibold  dark:text-[rgb(25,52,85)] dark:hover:bg-slate-400"
         >
           Create Shipment
         </button>
@@ -40,38 +39,23 @@ export default function ShipmentData({ shipments }: { shipments: Shipment[] }) {
     );
   }
 
-  function MetricCard({
-    title,
-    value,
-    change,
-  }: {
-    title: string;
-    value: number;
-    change: string;
-  }) {
+  function MetricCard({ title, value }: { title: string; value: number }) {
     return (
-      <div className="px-6 shadow-md py-6 rounded-lg">
-        <h3 className="text-sm uppercase text-stone-500">{title}</h3>
-        <p className="font-bold text-3xl text-[rgb(25,52,85)] mb-2">{value}</p>
-        <p className="font-semibold text-green-600">{change}</p>
+      <div className="px-6 py-6 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm bg-white dark:bg-slate-900">
+        <h3 className="text-sm text-stone-600 dark:text-gray-200">{title}</h3>
+        <p className="font-bold text-3xl text-[rgb(25,52,85)] dark:text-[#DEE6F0] mb-2">
+          {value}
+        </p>
       </div>
     );
   }
 
   return (
     <section className="grid grid-cols-4 py-4 gap-6">
-      <MetricCard title="Shipments in Progress" value={inProgress} change="" />
-      <MetricCard
-        title="Deliveries this month"
-        value={deliveredThisMonth}
-        change=""
-      />
-      <MetricCard
-        title="Pending & Failed Shipments"
-        value={pendingOrFailed}
-        change=""
-      />
-      <MetricCard title="Active Markets" value={markets} change="" />
+      <MetricCard title="Shipments in Progress" value={inProgress} />
+      <MetricCard title="Deliveries this month" value={deliveredThisMonth} />
+      <MetricCard title="Pending & Failed Shipments" value={pendingOrFailed} />
+      <MetricCard title="Active Markets" value={markets} />
     </section>
   );
 }

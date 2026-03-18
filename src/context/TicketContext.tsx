@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { TicketStatus } from "@/components/Support/StatusBadge";
+import { STORAGE_KEYS } from "@/storage/storageKeys";
 
-// TICKET TYPE CENTRALIZADO
 export interface Ticket {
   id: number;
   subject: string;
@@ -19,30 +19,23 @@ interface TicketsContextType {
   deleteTicket: (id: number) => void;
 }
 
-const STORAGE_KEY = "supportTickets";
 const TicketsContext = createContext<TicketsContextType | null>(null);
 
 export function TicketsProvider({ children }: { children: React.ReactNode }) {
-  const [tickets, setTickets] = useState<Ticket[]>([]);
-
-  // CARGAR STORAGE
-  useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) {
-          setTickets(parsed);
-        }
-      } catch (e) {
-        console.error("Error cargando tickets:", e);
-      }
+  const [tickets, setTickets] = useState<Ticket[]>(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEYS.tickets);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? (parsed as Ticket[]) : [];
+    } catch {
+      return [];
     }
-  }, []);
+  });
 
-  // GUARDAR STORAGE
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(tickets));
+    try {
+      localStorage.setItem(STORAGE_KEYS.tickets, JSON.stringify(tickets));
+    } catch {}
   }, [tickets]);
 
   function addTicket(t: Ticket) {
@@ -58,9 +51,7 @@ export function TicketsProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <TicketsContext.Provider
-      value={{ tickets, addTicket, updateTicket, deleteTicket }}
-    >
+    <TicketsContext.Provider value={{ tickets, addTicket, updateTicket, deleteTicket }}>
       {children}
     </TicketsContext.Provider>
   );

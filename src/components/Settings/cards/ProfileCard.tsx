@@ -41,7 +41,7 @@ export function ProfileCard({
   bioError,
 }: Props) {
   return (
-    <section className="rounded-xl border p-6 space-y-6">
+    <section className="rounded-xl border p-6 space-y-6 bg-white dark:bg-card dark:border-2 dark:border-slate-200/60">
       <div>
         <h2 className="text-lg font-semibold">Profile</h2>
         <p className="text-sm text-muted-foreground">
@@ -59,29 +59,52 @@ export function ProfileCard({
           <Label className="block">Profile picture</Label>
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-            <Input type="file" accept="image/*" onChange={onAvatarChange} className="cursor-pointer" />
-            <Button variant="outline" onClick={onRemoveAvatar} disabled={!avatarSrc}>
+            <Input
+              type="file"
+              accept="image/*"
+              onChange={onAvatarChange}
+              className="cursor-pointer"
+            />
+            <Button
+              variant="outline"
+              onClick={onRemoveAvatar}
+              disabled={!avatarSrc}
+            >
               Remove picture
             </Button>
           </div>
 
           {avatarError && <p className="text-sm text-red-600">{avatarError}</p>}
-          <p className="text-xs text-muted-foreground">PNG/JPG/WebP, max 3MB.</p>
+          <p className="text-xs text-muted-foreground">
+            PNG/JPG/WebP, max 3MB.
+          </p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <Label>Full name</Label>
-          <Input value={fullName} onChange={(e) => onFullNameChange(e.target.value)} />
-          {fullNameError && <p className="text-sm text-red-600">{fullNameError}</p>}
+          <Input
+            value={fullName}
+            onChange={(e) => onFullNameChange(e.target.value)}
+          />
+          {fullNameError && (
+            <p className="text-sm text-red-600">{fullNameError}</p>
+          )}
         </div>
 
         <div className="space-y-2">
           <Label>Username</Label>
-          <Input value={username} onChange={(e) => onUsernameChange(e.target.value)} />
-          {usernameError && <p className="text-sm text-red-600">{usernameError}</p>}
-          <p className="text-xs text-muted-foreground">Only letters, numbers and _</p>
+          <Input
+            value={username}
+            onChange={(e) => onUsernameChange(e.target.value)}
+          />
+          {usernameError && (
+            <p className="text-sm text-red-600">{usernameError}</p>
+          )}
+          <p className="text-xs text-muted-foreground">
+            Only letters, numbers and _
+          </p>
         </div>
 
         <div className="space-y-2 md:col-span-2">
@@ -92,7 +115,13 @@ export function ProfileCard({
             placeholder="Write something short… (max 160)"
           />
           <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span>{bioError ? <span className="text-red-600">{bioError}</span> : " "}</span>
+            <span>
+              {bioError ? (
+                <span className="text-red-600">{bioError}</span>
+              ) : (
+                " "
+              )}
+            </span>
             <span>{bio.length}/160</span>
           </div>
         </div>

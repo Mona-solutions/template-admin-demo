@@ -16,7 +16,7 @@ export default function UserTab() {
 
       <div>
         <p className="font-medium text-gray-800">{name}</p>
-        <p className="text-sm text-gray-500">{email}</p>
+        <p className="text-sm text-gray-500 dark:text-gray-200">{email}</p>
       </div>
     </div>
   );

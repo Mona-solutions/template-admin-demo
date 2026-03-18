@@ -22,14 +22,12 @@ export default function LandingPage() {
 
     if (!username) return;
 
-    // Persistencia + contexto
     login({
       name: name.trim(),
       email: userEmail,
       username: "",
     });
 
-    // 👉 Navegación TIPADA
     router.navigate({
       to: appRootRoute.to,
     });
@@ -39,8 +37,8 @@ export default function LandingPage() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[rgb(67,108,158)] to-[rgb(16,51,87)]">
       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
         <img
-          className="h-20 w-17 mx-auto mb-2"
-          src="/DroppitLogo.png"
+          className="h-20 mx-auto mb-2"
+          src="/DroppitLogo-dark.png"
           alt="droppit logo"
         />
         <h1 className="text-3xl font-normal mb-4 text-center text-[rgb(25,52,85)]">
