@@ -1,73 +1,123 @@
-# React + TypeScript + Vite
+# Droppit — International Shipment Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Droppit is a web-based admin dashboard built for an shipping and logistics company to centralize and streamline their logistics operations. It covers the full operational flow: from creating shipments and managing clients, to tracking payments and analyzing performance metrics.
 
-Currently, two official plugins are available:
+![Droppit Dashboard](./screenshots/dashboard.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Shipments
+- Create and manage shipments with a unique auto-generated Tracking ID
+- Filter by status, date, sender, or recipient
+- Real-time status tracking (In Transit, Delivered, Pending, Failed)
 
-## Expanding the ESLint configuration
+### Clients & Consignees
+- Full directory of clients and consignees
+- Store contact info, address, postal code, and country
+- Separate management for senders and recipients
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Payments
+- Register invoices linked to shipments and clients
+- Track payment status: Paid, Pending, or Failed
+- Filter by status, payment method, and date range
+- Summary metrics: total invoiced, settled, awaiting, and needs action
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Analytics & Statistics
+- Monthly shipment trend charts (line graph)
+- Status distribution breakdown (pie chart)
+- Key metrics: total shipments, delivered, pending, and failed
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Support
+- Internal support ticket system
+- Categorize by type and priority (Low, Medium, High)
+- Track ticket status: Open, Closed
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Settings
+- User profile management (name, username, bio, avatar)
+- Language and theme preferences (Light / Dark / System)
+
+---
+
+## Tech Stack
+
+| Category | Technology |
+|---|---|
+| Language | TypeScript |
+| UI Framework | React 19 |
+| Routing | TanStack Router v1 |
+| Styling | Tailwind CSS 3 + Shadcn/ui + Radix UI |
+| State Management | React Context API |
+| Data Fetching | TanStack React Query v5 |
+| Form Validation | Zod v4 |
+| Charts | Recharts |
+| Animations | Framer Motion |
+| Icons | Lucide React |
+| Build Tool | Vite 7 |
+| Linting | ESLint 9 + TypeScript ESLint |
+
+---
+
+## Getting Started
+
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/droppit.git
+
+# Navigate to the project folder
+cd droppit
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The app will be available at `http://localhost:5173`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project Structure
+
 ```
+src/
+├── components/       # Reusable UI components
+│   └── ui/           # Shadcn/ui base components
+├── context/          # React Context providers (shipments, clients, payments, tickets)
+├── pages/            # Route-level page components
+├── routes/           # TanStack Router route definitions
+├── types/            # TypeScript interfaces and types
+└── lib/              # Utility functions
+```
+
+---
+
+## Current Status
+
+This project is currently **frontend-only**. All data is managed client-side using React Context and persisted in the browser's local storage. The application is designed to integrate with a REST API, and backend development is planned as the next phase of the project.
+
+---
+
+## Screenshots
+
+| Dashboard | Shipments |
+|---|---|
+| ![Dashboard](./screenshots/dashboard.png) | ![Shipments](./screenshots/shipments.png) |
+
+| Payments | Analytics |
+|---|---|
+| ![Payments](./screenshots/payments.png) | ![Analytics](./screenshots/analytics.png) |
+
+---
+
+## License
+
+This project is licensed under the MIT License.
